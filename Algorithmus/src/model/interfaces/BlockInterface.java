@@ -5,10 +5,10 @@ public interface BlockInterface {
      *
      * @return Zwraca String, który jest kodem w danym języku
      */
-    String getCode();
+    public String getCode();
 
     /**
      * Wykonuje się przy każdej iteracji funkcji odświeżającej ekran
      */
-    void update();
+    public void update();
 }
