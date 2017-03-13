@@ -13,4 +13,8 @@ public class DecisionBlock extends Block implements BlockInterface {
     public String toCode() {
         return "";
     }
+
+    public void setPosition(int x, int y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
