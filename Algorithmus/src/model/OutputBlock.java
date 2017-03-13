@@ -1,5 +1,5 @@
 package model;
 
-public class OutputBlock extends Block{
+public class OutputBlock extends Block {
 
 }
