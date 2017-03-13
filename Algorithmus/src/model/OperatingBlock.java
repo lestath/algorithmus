@@ -1,5 +1,6 @@
 package model;
 
-public class OperatingBlock extends Block{
+import model.interfaces.BlockInterface;
 
+public class OperatingBlock extends Block {
 }
