@@ -4,14 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.Conf;
 import model.OperatingBlock;
 import view.blocks.Operating;
-import javafx.scene.input.MouseEvent;
+
 
 /**
  * Klasa kontrolująca interfejs graficzny programu
@@ -24,7 +24,8 @@ public class MainController {
     @FXML
     private URL location;
 
-    @FXML
+ 
+	@FXML
     private AnchorPane BlockPane;
 
     @FXML
@@ -41,15 +42,37 @@ public class MainController {
         assert BlockPane != null : "fx:id=\"BlockPane\" was not injected: check your FXML file 'MainView.fxml'.";
         assert MenuPane != null : "fx:id=\"MenuPane\" was not injected: check your FXML file 'MainView.fxml'.";
      
+        // inicjalizacja graficznych bloków operacyjnych
         this.operating = new Operating(new OperatingBlock(0,0,Conf.MENU_ELEMS_DIM));
-      operating.setOnMouseClicked(new EventHandler<MouseEvent>(){
-          @Override
-          public void handle(MouseEvent arg0) {
-        	  System.out.println("ok");
-          }
-      });
+        
+        
         this.MenuPane.getChildren().add(this.operating);
         
+        // Dodanie obsługi wydarzeń
+        this.operating.setOnMouseClicked(new MenuEventHandler(this,this.operating.block));
+        
+        
     }
+
+    
+    public AnchorPane getBlockPane() {
+  		return BlockPane;
+  	}
+
+
+  	public void setBlockPane(AnchorPane blockPane) {
+  		BlockPane = blockPane;
+  	}
+
+
+  	public FlowPane getMenuPane() {
+  		return MenuPane;
+  	}
+
+
+  	public void setMenuPane(FlowPane menuPane) {
+  		MenuPane = menuPane;
+  	}
+
 
 }

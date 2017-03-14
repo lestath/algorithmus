@@ -14,12 +14,12 @@ public class Block implements BlockInterface {
     private Dimension size;
     private String content;
     private String code;
-
+    
     /**
      * Konstruktok bloku
      * @param x Pozycja x obiektu na ekranie
      * @param y Pozycja y obiektu na ekranie
-     */
+     */    
     Block (int x, int y) {
         this.previous = null;
         this.next = null;
@@ -29,6 +29,14 @@ public class Block implements BlockInterface {
         this.content = "Type code here...";
         this.code = null;
     }
+
+    Block(int x, int y, Point start){
+     	this(x,y);
+     	this.position = start;
+     }
+    
+
+    
 
     /**
      * Zwraca obiekt poprzedzający ten blok
