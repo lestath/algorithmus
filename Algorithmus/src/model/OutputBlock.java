@@ -1,12 +1,14 @@
 package model;
 
+import java.awt.Dimension;
+import java.awt.Point;
+
 import model.interfaces.BlockInterface;
 
 public class OutputBlock extends Block implements BlockInterface{
 
-	OutputBlock(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+	OutputBlock(Point p,Dimension dim) {
+		super(p,dim);
 	}
 	
 	public void update(){

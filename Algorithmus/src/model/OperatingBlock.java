@@ -12,17 +12,9 @@ import model.interfaces.BlockInterface;
  */
 public class OperatingBlock extends Block implements BlockInterface{
 
-	public OperatingBlock(int x, int y,Dimension dim) {
-		super(x, y);
-		super.setSize(dim);
-		// TODO Auto-generated constructor stub
-	}
-	
-	public OperatingBlock(int x, int y,Dimension dim,Point p) {
-		super(x, y);
-		super.setSize(dim);
-		super.setPosition(p);
-		// TODO Auto-generated constructor stub
+	public OperatingBlock(Point p,Dimension dim) {
+		super(p,dim);
+
 	}
 	
 	public void update(){

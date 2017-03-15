@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -7,10 +8,13 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import model.Conf;
+import model.DecisionBlock;
 import model.OperatingBlock;
+import model.StartBlock;
+import view.blocks.Decision;
 import view.blocks.Operating;
+import view.blocks.Start;
 
 
 /**
@@ -18,6 +22,15 @@ import view.blocks.Operating;
  */
 public class MainController {
 
+	/**
+	 * Pozycja Y elementu w menu
+	 */
+	private int startpos = 0;
+	/**
+	 * krok przemieszczenia
+	 */
+	private int move; 
+	
     @FXML
     private ResourceBundle resources;
 
@@ -26,15 +39,17 @@ public class MainController {
 
  
 	@FXML
-    private AnchorPane BlockPane;
+    public AnchorPane BlockPane;
 
     @FXML
-    private FlowPane MenuPane;
+    private AnchorPane MenuPane;
     
     /**
      * pole graficznej reprezentacji bloku kodu w menu
      */
     private Operating operating;
+    private Start start;
+    private Decision decision;
 
 
     @FXML
@@ -42,16 +57,15 @@ public class MainController {
         assert BlockPane != null : "fx:id=\"BlockPane\" was not injected: check your FXML file 'MainView.fxml'.";
         assert MenuPane != null : "fx:id=\"MenuPane\" was not injected: check your FXML file 'MainView.fxml'.";
      
+        this.move = (int)Conf.MENU_ELEMS_DIM.getHeight() + 10;
+        
         // inicjalizacja graficznych bloków operacyjnych
-        this.operating = new Operating(new OperatingBlock(0,0,Conf.MENU_ELEMS_DIM));
-        
-        
-        this.MenuPane.getChildren().add(this.operating);
-        
-        // Dodanie obsługi wydarzeń
-        this.operating.setOnMouseClicked(new MenuEventHandler(this,this.operating.block));
-        
-        
+        this.startInitialize();
+        this.operatingInitialize();
+        this.decisionInitialize();
+        this.inputInitialize();
+        this.outputInitialize();
+        this.stopInitialize();
     }
 
     
@@ -65,14 +79,56 @@ public class MainController {
   	}
 
 
-  	public FlowPane getMenuPane() {
+  	public AnchorPane getMenuPane() {
   		return MenuPane;
   	}
 
 
-  	public void setMenuPane(FlowPane menuPane) {
+  	public void setMenuPane(AnchorPane menuPane) {
   		MenuPane = menuPane;
   	}
 
+  	/**
+  	 * Metoda inicjalizacji bloków graficznych
+  	 */
+  	private void operatingInitialize(){
+        this.operating = new Operating(new OperatingBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+        this.MenuPane.getChildren().add(this.operating);
+        startpos = startpos + move;
+       
+        // eventy
+        this.operating.setOnMouseClicked(new MenuEventHandler(this,this.operating.getBlock()));
+  	}
+  	
+  	private void startInitialize(){
+        this.start = new Start(new StartBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+        this.MenuPane.getChildren().add(this.start);
+        startpos = startpos + move;
+        
+        //eventy
+        this.start.setOnMouseClicked(new MenuEventHandler(this,this.start.getBlock()));
+  	}
+  	
+  	private void decisionInitialize(){
+  	  this.decision = new Decision(new DecisionBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+      this.MenuPane.getChildren().add(this.decision);
+      startpos = startpos + move;
+      
+      //eventy
+      this.decision.setOnMouseClicked(new MenuEventHandler(this,this.decision.getBlock()));
+  		
+  	}
+  	
+  	private void inputInitialize(){
+  		
+  	}
+  	
+  	private void outputInitialize(){
+  		
+  	}
+  	
+  	private void stopInitialize(){
+  		
+  	}
 
 }

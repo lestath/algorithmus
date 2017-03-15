@@ -14,24 +14,19 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 
 	Block block;
 	GraphicsBlockInterface gpb;
-	private int x,y;
 
 	ScreenEventHandler(Block b, GraphicsBlockInterface inter){
 		this.block = b;
 		this.gpb = inter;
-		this.x = x+(int)b.getPosition().getX();
-		this.y = y+(int)b.getPosition().getY();
 	}
 	
 	@Override
 	public void handle(MouseEvent event) {
 		if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)){
-			x = (int)event.getX();
-			y = (int)event.getY();
-			System.out.println(x);
-			System.out.println(y);
-			this.block.getPosition().setLocation(x,y);
-			gpb.update();
+			this.block.getPosition().setLocation(
+					block.getPosition().getX()+event.getX()-block.getSize().getWidth()/2.0
+					,block.getPosition().getY()+event.getY()-block.getSize().getHeight()/2.0);
+			gpb.refresh();
 		}
 		// TODO Auto-generated method stub
 		

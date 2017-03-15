@@ -11,4 +11,5 @@ public interface BlockInterface {
      * Wykonuje się przy każdej iteracji funkcji odświeżającej ekran
      */
     public void update();
+   
 }

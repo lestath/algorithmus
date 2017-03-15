@@ -15,24 +15,11 @@ public class Block implements BlockInterface {
     private String content;
     private String code;
     
-    /**
-     * Konstruktok bloku
-     * @param x Pozycja x obiektu na ekranie
-     * @param y Pozycja y obiektu na ekranie
-     */    
-    Block (int x, int y) {
-        this.previous = null;
-        this.next = null;
-        this.handle = null;
-        this.position = new Point(0, 0);
-        this.size = new Dimension(x, y);
-        this.content = "Type code here...";
-        this.code = null;
-    }
 
-    Block(int x, int y, Point start){
-     	this(x,y);
+
+    Block(Point start,Dimension dim){
      	this.position = start;
+     	this.size = dim;
      }
     
 
