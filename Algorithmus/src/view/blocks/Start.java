@@ -1,14 +1,8 @@
 package view.blocks;
 
 
-
-import java.awt.Font;
-
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Ellipse;
 import model.Conf;
 import model.StartBlock;
@@ -47,9 +41,10 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 	}
 	
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void prepair(AnchorPane pan){
-		this.blocklabel = new Label("Start");
+		this.blocklabel = new Label(this.block.getContent());
 		pan.getChildren().add(this.blocklabel);
 		this.blocklabel.impl_processCSS(true);
 		this.refresh();

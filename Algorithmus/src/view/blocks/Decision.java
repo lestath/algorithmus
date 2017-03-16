@@ -42,9 +42,13 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void prepair(AnchorPane pan) {
-		this.blockfield = new TextField("Start");
+		this.blockfield = new TextField();
+		this.blockfield.setFocusTraversable(false);;
+		this.blockfield.setPromptText(block.getContent());
+		this.blockfield.setPrefWidth(this.block.getSize().getWidth()*0.6);
 		pan.getChildren().add(this.blockfield);
 		this.blockfield.impl_processCSS(true);
 		this.refresh();
@@ -64,7 +68,10 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 	}
 
 	private void blockFieldRelocation(){
-		
+		this.blockfield.relocate(
+				this.block.getPosition().getX()+0.2*this.block.getSize().getWidth(),
+				this.block.getPosition().getY()+0.35*this.block.getSize().getHeight()
+		);
 	}
 
 }

@@ -32,11 +32,15 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void prepair(AnchorPane pan) {
-		this.blocktextarea = new TextArea(this.block.getContent());
-		this.blocktextarea.setPrefWidth(this.block.getSize().getWidth()-30);
-		this.blocktextarea.setPrefHeight(this.block.getSize().getHeight()-30);
+		this.blocktextarea = new TextArea();
+		System.out.println(block.getContent());
+		this.blocktextarea.setPromptText(block.getContent());
+		this.blocktextarea.setFocusTraversable(false);;
+		this.blocktextarea.setPrefWidth(this.block.getSize().getWidth()*0.7);
+		this.blocktextarea.setPrefHeight(this.block.getSize().getHeight()*0.8);
 		pan.getChildren().add(this.blocktextarea);
 		this.blocktextarea.impl_processCSS(true);
 		this.refresh();
@@ -44,8 +48,8 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 	
 	private void labelRelocation(){
 		this.blocktextarea.relocate(
-				this.block.getPosition().getX()+15,
-				this.block.getPosition().getY()+15
+				this.block.getPosition().getX()+0.15*this.block.getSize().getWidth(),
+				this.block.getPosition().getY()+0.1*this.block.getSize().getHeight()
 		);
 	}
 	

@@ -14,6 +14,7 @@ public class OperatingBlock extends Block implements BlockInterface{
 
 	public OperatingBlock(Point p,Dimension dim) {
 		super(p,dim);
+		setContent(Conf.STANDARD_TEXT[Conf.BLOCK.OPERATING.ordinal()]);
 
 	}
 	

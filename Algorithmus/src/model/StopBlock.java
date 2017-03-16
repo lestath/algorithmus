@@ -7,10 +7,11 @@ import model.interfaces.BlockInterface;
 
 public class StopBlock extends Block implements BlockInterface{
 
-	StopBlock(Point p,Dimension dim) {
+	public StopBlock(Point p,Dimension dim) {
 		super(p,dim);
+		setContent(Conf.STANDARD_TEXT[Conf.BLOCK.STOP.ordinal()]);
 	}
-	
+
 	public void update(){
 		
 	}

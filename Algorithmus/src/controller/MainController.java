@@ -10,11 +10,15 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import model.Conf;
 import model.DecisionBlock;
+import model.InputBlock;
 import model.OperatingBlock;
 import model.StartBlock;
+import model.StopBlock;
 import view.blocks.Decision;
+import view.blocks.Input;
 import view.blocks.Operating;
 import view.blocks.Start;
+import view.blocks.Stop;
 
 
 /**
@@ -50,6 +54,8 @@ public class MainController {
     private Operating operating;
     private Start start;
     private Decision decision;
+    private Input input;
+    private Stop stop;
 
 
     @FXML
@@ -120,7 +126,12 @@ public class MainController {
   	}
   	
   	private void inputInitialize(){
-  		
+    	  this.input = new Input(new InputBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+          this.MenuPane.getChildren().add(this.input);
+          startpos = startpos + move;
+          
+          //eventy
+          this.input.setOnMouseClicked(new MenuEventHandler(this,this.input.getBlock()));
   	}
   	
   	private void outputInitialize(){
@@ -128,7 +139,12 @@ public class MainController {
   	}
   	
   	private void stopInitialize(){
-  		
+  		 this.stop = new Stop(new StopBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+         this.MenuPane.getChildren().add(this.stop);
+         startpos = startpos + move;
+         
+         //eventy
+         this.stop.setOnMouseClicked(new MenuEventHandler(this,this.stop.getBlock()));
   	}
 
 }

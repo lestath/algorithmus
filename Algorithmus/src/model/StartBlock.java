@@ -10,7 +10,7 @@ public class StartBlock extends Block implements BlockInterface{
 
 	public StartBlock(Point p,Dimension dim) {
 		super(p,dim);
-		this.setContent("Start");
+		setContent(Conf.STANDARD_TEXT[Conf.BLOCK.START.ordinal()]);
 	}
 
 	public void update(){
