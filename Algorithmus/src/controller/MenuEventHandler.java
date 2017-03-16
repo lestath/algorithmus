@@ -52,14 +52,18 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		}else if(this.generator instanceof StopBlock){
 			this.stopHandle();
 		}
-		System.out.println("nowy handler poszło");
 	}
 	
 	private void operatingHandle(){
 		 OperatingBlock myblock = new OperatingBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Operating op = new Operating(myblock);
 		 BlocksHolder.blocklist.add(myblock);
+		
+		 //eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
+
+		  
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
 	}
@@ -79,7 +83,12 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 DecisionBlock myblock = new DecisionBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Decision op = new Decision(myblock);
 		 BlocksHolder.blocklist.add(myblock);
+		 
+		 // eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
+		
+		 
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
 	}
@@ -88,7 +97,12 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 InputBlock myblock = new InputBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Input op = new Input(myblock);
 		 BlocksHolder.blocklist.add(myblock);
+		
+		 //eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
+		 
+		 
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
 	}
@@ -102,6 +116,9 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 this.controller.getBlockPane().getChildren().add(op);
 		 assert this.controller.getBlockPane() != null : "Block pane null";
 		 op.prepair(this.controller.getBlockPane());
+		 
+		 //TODO linijka ponizej do wyrzucenia
+		 CodeMaker.generateCode();
 	}
 	
 }

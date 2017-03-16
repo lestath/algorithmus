@@ -1,6 +1,7 @@
 package view.blocks;
 
-//TODO Poprawić działanie na przesunięciach myszką oraz zespolić z polem tekstowym
+
+
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
@@ -31,7 +32,9 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 			this.block.getPosition().getY()+this.block.getSize().getHeight()/2
 		});
 		this.setFill(Conf.BLOCK_COLOR);
+		this.blockfield = new TextField();
 		this.refresh();
+		
 
 	}
 	@Override
@@ -45,10 +48,10 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void prepair(AnchorPane pan) {
-		this.blockfield = new TextField();
 		this.blockfield.setFocusTraversable(false);;
 		this.blockfield.setPromptText(block.getContent());
 		this.blockfield.setPrefWidth(this.block.getSize().getWidth()*0.6);
+	
 		pan.getChildren().add(this.blockfield);
 		this.blockfield.impl_processCSS(true);
 		this.refresh();
