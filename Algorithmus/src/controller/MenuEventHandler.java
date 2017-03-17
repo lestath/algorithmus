@@ -66,17 +66,22 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		  
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
+		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 	}
 	
 	private void startHandle(){
 		 StartBlock myblock = new StartBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Start op = new Start(myblock);
 		 BlocksHolder.blocklist.add(myblock);
+		
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
-		 assert this.controller != null : "Empty contorrler";
+		
 		 this.controller.getBlockPane().getChildren().add(op);
-		 assert this.controller.getBlockPane() != null : "Block pane null";
+		 
 		 op.prepair(this.controller.getBlockPane());
+		 op.getOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 
 	}
 
 	private void decisionHandle(){
@@ -91,6 +96,9 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
+		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getLeftOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getRightOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 	}
 	
 	private void inputHandle(){
@@ -105,6 +113,8 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 
 		 this.controller.getBlockPane().getChildren().add(op);
 		 op.prepair(this.controller.getBlockPane());
+		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 	}
 	
 	private void stopHandle(){
@@ -116,9 +126,10 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 this.controller.getBlockPane().getChildren().add(op);
 		 assert this.controller.getBlockPane() != null : "Block pane null";
 		 op.prepair(this.controller.getBlockPane());
+		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 		 
 		 //TODO linijka ponizej do wyrzucenia
-		 CodeMaker.generateCode();
+		// CodeMaker.generateCode();
 	}
 	
 }

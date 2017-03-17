@@ -31,6 +31,9 @@ public class KeyEventHandler implements EventHandler<KeyEvent> {
 
 	}
 
+	/*
+	 *  Metoda wykonująca sie po przyciśnięciu klawisza Enter
+	 */
 	private void onEnter(){
 		
 		if(this.object instanceof TextField){

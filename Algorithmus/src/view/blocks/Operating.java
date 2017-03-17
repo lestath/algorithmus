@@ -5,6 +5,8 @@ import javafx.scene.shape.Rectangle;
 import model.Conf;
 import model.OperatingBlock;
 import model.interfaces.GraphicsBlockInterface;
+import view.handlers.InHandler;
+import view.handlers.OutHandler;
 
 
 /**
@@ -16,6 +18,9 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 
 	private  OperatingBlock block;
 	private  TextArea blockfield;
+	private InHandler in;
+	private OutHandler out;
+	
 	public Operating(OperatingBlock blo){
 		block = blo;
 		this.setWidth(block.getSize().getWidth());
@@ -31,6 +36,12 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 		if(this.blockfield!= null){
 			this.labelRelocation();
 		}
+		if(this.getIn()!=null){
+			this.in.move();
+		}
+		if(this.getOut()!=null){
+			this.out.move();
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -41,7 +52,11 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 		this.blockfield.setFocusTraversable(false);
 		this.blockfield.setPrefWidth(this.block.getSize().getWidth()*0.7);
 		this.blockfield.setPrefHeight(this.block.getSize().getHeight()*0.8);
+		this.setIn(new InHandler(this.getBlock()));
+		this.setOut(new OutHandler(this.getBlock()));
 		pan.getChildren().add(this.blockfield);
+		pan.getChildren().add(this.in);
+		pan.getChildren().add(this.out);
 		this.blockfield.impl_processCSS(true);
 		this.refresh();
 	}
@@ -65,5 +80,19 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 	public void setBlockfield(TextArea blockfield) {
 		this.blockfield = blockfield;
 	}
+	public InHandler getIn() {
+		return in;
+	}
+	public void setIn(InHandler in) {
+		this.in = in;
+	}
+	public OutHandler getOut() {
+		return out;
+	}
+	public void setOut(OutHandler out) {
+		this.out = out;
+	}
+	
+	
 
 }

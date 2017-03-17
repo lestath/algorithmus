@@ -6,10 +6,13 @@ import javafx.scene.shape.Ellipse;
 import model.Conf;
 import model.StopBlock;
 import model.interfaces.GraphicsBlockInterface;
+import view.handlers.InHandler;
 
 public class Stop extends Ellipse implements GraphicsBlockInterface{
 	private StopBlock block;
 	private Label blocklabel;
+	private InHandler in;
+	
 	public Stop(StopBlock StopBlock){
 		block = StopBlock;
 		this.setRadiusX(block.getSize().getWidth()/2);
@@ -22,6 +25,9 @@ public class Stop extends Ellipse implements GraphicsBlockInterface{
 		this.relocate(block.getPosition().getX(),block.getPosition().getY());
 		if(this.blocklabel!= null){
 			labelRelocation();
+		}
+		if(this.getIn()!=null){
+			this.getIn().move();
 		}
 	}
 	
@@ -43,6 +49,8 @@ public class Stop extends Ellipse implements GraphicsBlockInterface{
 	@Override
 	public void prepair(AnchorPane pan){
 		this.blocklabel = new Label(this.block.getContent());
+		this.in = new InHandler(this.getBlock());
+		pan.getChildren().add(this.in);
 		pan.getChildren().add(this.blocklabel);
 		this.blocklabel.impl_processCSS(true);
 		this.refresh();
@@ -57,4 +65,12 @@ public class Stop extends Ellipse implements GraphicsBlockInterface{
 				this.block.getPosition().getY()+this.getRadiusY()-this.blocklabel.prefHeight(-1)/2
 		);
 	}
+	public InHandler getIn() {
+		return in;
+	}
+	public void setIn(InHandler in) {
+		this.in = in;
+	}
+	
+	
 }

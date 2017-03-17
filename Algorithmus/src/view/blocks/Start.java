@@ -7,10 +7,13 @@ import javafx.scene.shape.Ellipse;
 import model.Conf;
 import model.StartBlock;
 import model.interfaces.GraphicsBlockInterface;
+import view.handlers.OutHandler;
 
 public class Start extends Ellipse implements GraphicsBlockInterface{
 	private StartBlock block;
 	private Label blocklabel;
+	private OutHandler outhandler;
+
 
 	public Start(StartBlock startBlock){
 		block = startBlock;
@@ -24,6 +27,9 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 		this.relocate(block.getPosition().getX(),block.getPosition().getY());
 		if(this.blocklabel!= null){
 			labelRelocation();
+		}
+		if(this.outhandler!=null){
+			this.outhandler.move();
 		}
 	}
 	
@@ -46,6 +52,8 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 	public void prepair(AnchorPane pan){
 		this.blocklabel = new Label(this.block.getContent());
 		pan.getChildren().add(this.blocklabel);
+		this.outhandler =new OutHandler(this.getBlock());
+		pan.getChildren().add(this.outhandler);
 		this.blocklabel.impl_processCSS(true);
 		this.refresh();
 	}
@@ -58,5 +66,12 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 				this.block.getPosition().getX()+this.getRadiusX()-this.blocklabel.prefWidth(-1)/2,
 				this.block.getPosition().getY()+this.getRadiusY()-this.blocklabel.prefHeight(-1)/2
 		);
+	}
+	
+	public void setOut(OutHandler outhand) {
+		this.outhandler = outhand;
+	}
+	public OutHandler getOut() {
+		return this.outhandler;
 	}
 }

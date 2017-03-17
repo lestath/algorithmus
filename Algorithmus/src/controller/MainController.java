@@ -29,7 +29,7 @@ public class MainController {
 	/**
 	 * Pozycja Y elementu w menu
 	 */
-	private int startpos = 0;
+	private int startpos = 20;
 	/**
 	 * krok przemieszczenia
 	 */
@@ -48,6 +48,7 @@ public class MainController {
     @FXML
     private AnchorPane MenuPane;
     
+
     /**
      * pole graficznej reprezentacji bloku kodu w menu
      */
@@ -64,6 +65,7 @@ public class MainController {
         assert MenuPane != null : "fx:id=\"MenuPane\" was not injected: check your FXML file 'MainView.fxml'.";
      
         this.move = (int)Conf.MENU_ELEMS_DIM.getHeight() + 10;
+        
         
         // inicjalizacja graficznych bloków operacyjnych
         this.startInitialize();
@@ -146,5 +148,6 @@ public class MainController {
          //eventy
          this.stop.setOnMouseClicked(new MenuEventHandler(this,this.stop.getBlock()));
   	}
+  	
 
 }
