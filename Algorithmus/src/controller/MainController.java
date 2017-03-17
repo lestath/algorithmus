@@ -74,6 +74,8 @@ public class MainController {
         this.inputInitialize();
         this.outputInitialize();
         this.stopInitialize();
+        this.BlockPane.setOnMouseMoved(new ScreenEventHandler(this,null,null));
+        this.BlockPane.setOnMouseClicked(new ScreenEventHandler(this,null,null));
     }
 
     
