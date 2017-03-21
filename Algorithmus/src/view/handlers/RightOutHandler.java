@@ -9,8 +9,8 @@ import model.Block;
  */
 public class RightOutHandler extends OutHandler {
 
-	public RightOutHandler(Block bl) {
-		super(bl);
+	public RightOutHandler(Block bl,Block b) {
+		super(bl,b);
 		// TODO Auto-generated constructor stub
 	}
 

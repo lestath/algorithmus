@@ -9,8 +9,8 @@ import model.Block;
  */
 public class LeftOutHandler extends OutHandler{
 
-	public LeftOutHandler(Block bl) {
-		super(bl);
+	public LeftOutHandler(Block bl,Block b) {
+		super(bl,b);
 	}
 
 	public void move(){

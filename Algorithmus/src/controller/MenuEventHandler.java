@@ -71,16 +71,18 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 	}
 	
 	private void startHandle(){
-		 StartBlock myblock = new StartBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
-		 Start op = new Start(myblock);
-		 BlocksHolder.blocklist.add(myblock);
-		
-		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
-		
-		 this.controller.getBlockPane().getChildren().add(op);
-		 
-		 op.prepair(this.controller.getBlockPane());
-		 op.getOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		if(!CodeMaker.checkSingleStartBlock()){  // najpierw sprawdzenie bo może być tylko jeden blok startu
+			 StartBlock myblock = new StartBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
+			 Start op = new Start(myblock);
+			 BlocksHolder.blocklist.add(myblock);
+			
+			 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+			
+			 this.controller.getBlockPane().getChildren().add(op);
+			 
+			 op.prepair(this.controller.getBlockPane());
+			 op.getOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		}
 		 
 	}
 
@@ -118,6 +120,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 	}
 	
 	private void stopHandle(){
+		if(!CodeMaker.checkSingleStopBlock()){  // najpierw sprawdzenie bo może być tylko jeden blok stopu
 		 StopBlock myblock = new StopBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Stop op = new Stop(myblock);
 		 BlocksHolder.blocklist.add(myblock);
@@ -127,6 +130,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 assert this.controller.getBlockPane() != null : "Block pane null";
 		 op.prepair(this.controller.getBlockPane());
 		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		}
 		 
 		 //TODO linijka ponizej do wyrzucenia
 		// CodeMaker.generateCode();

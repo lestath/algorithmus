@@ -52,8 +52,8 @@ public class Operating extends Rectangle implements GraphicsBlockInterface{
 		this.blockfield.setFocusTraversable(false);
 		this.blockfield.setPrefWidth(this.block.getSize().getWidth()*0.7);
 		this.blockfield.setPrefHeight(this.block.getSize().getHeight()*0.8);
-		this.setIn(new InHandler(this.getBlock()));
-		this.setOut(new OutHandler(this.getBlock()));
+		this.setIn(new InHandler(this.getBlock(),this.getBlock().getPrevious()));
+		this.setOut(new OutHandler(this.getBlock(),this.getBlock().getNext()));
 		pan.getChildren().add(this.blockfield);
 		pan.getChildren().add(this.in);
 		pan.getChildren().add(this.out);

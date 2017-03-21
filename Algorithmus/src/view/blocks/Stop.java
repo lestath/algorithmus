@@ -49,7 +49,7 @@ public class Stop extends Ellipse implements GraphicsBlockInterface{
 	@Override
 	public void prepair(AnchorPane pan){
 		this.blocklabel = new Label(this.block.getContent());
-		this.in = new InHandler(this.getBlock());
+		this.in = new InHandler(this.getBlock(),this.getBlock().getPrevious());
 		pan.getChildren().add(this.in);
 		pan.getChildren().add(this.blocklabel);
 		this.blocklabel.impl_processCSS(true);

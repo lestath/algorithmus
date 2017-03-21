@@ -52,7 +52,7 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 	public void prepair(AnchorPane pan){
 		this.blocklabel = new Label(this.block.getContent());
 		pan.getChildren().add(this.blocklabel);
-		this.outhandler =new OutHandler(this.getBlock());
+		this.outhandler =new OutHandler(this.getBlock(),this.getBlock().getNext());
 		pan.getChildren().add(this.outhandler);
 		this.blocklabel.impl_processCSS(true);
 		this.refresh();

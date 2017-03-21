@@ -66,9 +66,9 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		this.blockfield.setFocusTraversable(false);;
 		this.blockfield.setPromptText(block.getContent());
 		this.blockfield.setPrefWidth(this.block.getSize().getWidth()*0.6);
-		this.leftout = new LeftOutHandler(this.getBlock());
-		this.rightout = new RightOutHandler(this.getBlock());
-		this.in = new InHandler(this.getBlock());
+		this.leftout = new LeftOutHandler(this.getBlock(),this.getBlock().getNoblock());
+		this.rightout = new RightOutHandler(this.getBlock(),this.getBlock().getNext());
+		this.in = new InHandler(this.getBlock(),this.getBlock().getPrevious());
 		pan.getChildren().add(this.leftout);
 		pan.getChildren().add(this.rightout);
 		pan.getChildren().add(this.in);
@@ -114,7 +114,5 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 	public void setRightOut(RightOutHandler rightout) {
 		this.rightout = rightout;
 	}
-	
-	
 
 }

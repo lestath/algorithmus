@@ -2,6 +2,7 @@ package view.handlers;
 
 import javafx.scene.shape.Rectangle;
 import model.Block;
+import view.Arrows.Arrow;
 
 /**
  * 
@@ -9,12 +10,16 @@ import model.Block;
  *
  */
 public class Handler extends Rectangle {
-	Block block;
+	Block block; // blok własciciel handlera
+	Block connected; // trzyma konkretne wejście/wyjscie
+	Arrow arrow; // strzałka w handlerze
 
-	public Handler(Block bl){
+	// pierwszy parametr to blok który jest właścicielem handlera, drugi to skojarzenie konkretnego wejścia innego bloku
+	public Handler(Block bl, Block connected){
 		this.block = bl;
-		this.setWidth(this.block.getSize().getWidth()*0.08);
-		this.setHeight(this.block.getSize().getHeight()*0.1);
+		this.connected = connected;
+		this.setWidth(this.block.getSize().getWidth()*0.1);
+		this.setHeight(this.block.getSize().getHeight()*0.2);
 	}
 	
 	public Block getBlock() {
@@ -23,4 +28,25 @@ public class Handler extends Rectangle {
 	public void setBlock(Block block) {
 		this.block = block;
 	}
+
+	public Block getConnected() {
+		return connected;
+	}
+
+	public void setConnected(Block connected) {
+		this.connected = connected;
+		this.block.setNext(this.connected);
+		System.out.println("Podłączam nastepnik");
+		System.out.println(this.connected.getContent());
+		
+	}
+	
+	public Arrow getArrow() {
+		return arrow;
+	}
+
+	public void setArrow(Arrow arrow) {
+		this.arrow = arrow;
+	}
+
 }

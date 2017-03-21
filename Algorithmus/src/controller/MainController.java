@@ -4,9 +4,9 @@ import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import model.Conf;
 import model.DecisionBlock;
@@ -49,6 +49,10 @@ public class MainController {
     private AnchorPane MenuPane;
     
 
+    @FXML
+    private Button generatebtn;
+
+
     /**
      * pole graficznej reprezentacji bloku kodu w menu
      */
@@ -77,6 +81,15 @@ public class MainController {
         this.BlockPane.setOnMouseMoved(new ScreenEventHandler(this,null,null));
         this.BlockPane.setOnMouseClicked(new ScreenEventHandler(this,null,null));
     }
+    
+
+    // metoda wywowływana po wcisnięciu przycisku generate
+    @FXML
+    void generateCode(ActionEvent event) {
+    	CodeMaker.test();
+    }
+
+    
 
     
     public AnchorPane getBlockPane() {

@@ -12,4 +12,5 @@ public interface GraphicsBlockInterface {
 	public void refresh();
 	// przygotowanie elementu do wyświetlenia w bloku głównym
 	public void prepair(AnchorPane pan);
+	
 }
