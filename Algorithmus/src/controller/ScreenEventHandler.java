@@ -37,7 +37,6 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 			if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
 				if(event.getSource() instanceof InHandler){
 					this.inputHandlerService(event);
-					System.out.println("coś idzie");
 				}else if(event.getSource() instanceof OutHandler){
 					this.outputHandlerService(event);
 				}else if(event.getSource() instanceof AnchorPane){
@@ -117,8 +116,10 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 					System.out.println(src.getBlock().getContent());
 				}
 				ph.setConnected(src.getBlock());
-				ph.setArrow(ar);
 				src.setArrow(ar);
+				
+				InHandler in = (InHandler) src;
+				in.move();
 				ViewParams.ARROW_MODE = false;
 				ViewParams.ARROW_LIST.add(ViewParams.ACTUAL_ARROW);
 				ViewParams.ACTUAL_ARROW = null;
@@ -142,12 +143,15 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 				ViewParams.ACTUAL_HANDLER = src;
 				ViewParams.ARROW_MODE = true;
 				ViewParams.ACTUAL_ARROW = new Arrow(
-						 new Point((int)src.getLayoutX(),(int)src.getLayoutY())
+						 new Point((int)(src.getLayoutX()+src.getWidth()/2),(int)(src.getLayoutY()+src.getWidth()/2))
 						, new Point((int)src.getLayoutX()+50,(int)src.getLayoutY()+50)
 						,this.cont.getBlockPane()
 				);
 				Arrow ar = ViewParams.ACTUAL_ARROW;
 				ar.setOwner(src);
+				src.setArrow(ar);
+				OutHandler o = (OutHandler) src;
+				o.move();
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Block;
 import model.BlocksHolder;
+import model.DecisionBlock;
 import model.StartBlock;
 import model.StopBlock;
 import model.interfaces.BlockInterface;
@@ -24,18 +25,25 @@ public class CodeMaker {
 		}
 	}
 	
-	//TODO algorytm kodu
+	//TODO algorytm generowania kodu kodu
 	// w tej metodzie można przeprowadzać testy algorytmów generowania kodu 
 	public static void test(){
 		ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
 		Block b;
+		DecisionBlock db;
 		boolean start = checkSingleStartBlock();
 		boolean stop = checkSingleStopBlock();
+		if(!start){System.out.println("No Start Block !!!"); return;}
+		if(!stop){System.out.println("No Stop Block !!!"); return;}
 
 		for(BlockInterface bl : lst){
 			b = (Block) bl;
 			if(b instanceof StartBlock){
 				while(b!=null){
+					if(b instanceof DecisionBlock){
+						db = (DecisionBlock) b;
+						System.out.println("LEWY ->> "+db.getNoblock().getContent());
+					}
 					System.out.println(b.getContent());
 					b = b.getNext();
 				}
@@ -44,8 +52,7 @@ public class CodeMaker {
 		}
 		
 
-		if(!start){System.out.println("No Start Block !!!"); return;}
-		if(!stop){System.out.println("No Stop Block !!!"); return;}
+
 		
 	}
 	
