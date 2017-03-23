@@ -1,9 +1,10 @@
 package view.blocks;
 
+
 import java.awt.Dimension;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import model.Conf;
 import model.NodeBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -12,7 +13,7 @@ import view.handlers.LeftInHandler;
 import view.handlers.OutHandler;
 import view.handlers.RightInHandler;
 
-public class Node extends Circle implements GraphicsBlockInterface{
+public class Node extends Ellipse implements GraphicsBlockInterface{
 	private NodeBlock block;
 	private OutHandler out;
 	private InHandler in;
@@ -22,7 +23,9 @@ public class Node extends Circle implements GraphicsBlockInterface{
 	
 	public Node(NodeBlock block){
 		this.block = block;
-		this.setRadius(block.getSize().getWidth()/4);
+		this.block.setSize(new Dimension((int)block.getSize().getHeight(),(int)block.getSize().getHeight()));
+		this.setRadiusX(block.getSize().getWidth()/2);
+		this.setRadiusY(block.getSize().getHeight()/2);
 		this.setFill(Conf.NODE_COLOR);
 		this.refresh();
 	}

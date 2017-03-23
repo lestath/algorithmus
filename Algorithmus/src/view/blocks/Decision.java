@@ -5,6 +5,8 @@ package view.blocks;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import model.Conf;
 import model.DecisionBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -18,6 +20,7 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 	private InHandler in;
 	private RightOutHandler rightout;
 	private LeftOutHandler leftout;
+	private Text notext;
 	
 	public Decision(DecisionBlock blo){
 		block = blo;
@@ -40,7 +43,8 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		this.setFill(Conf.BLOCK_COLOR);
 		this.blockfield = new TextField();
 		this.refresh();
-		
+		this.notext = new Text("N");
+		this.notext.setBoundsType(TextBoundsType.VISUAL);
 
 	}
 	@Override
@@ -51,6 +55,11 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		}
 		if(this.getLeftOut()!=null){
 			this.getLeftOut().move();
+			if(this.notext!=null){
+				this.notext.relocate(
+						this.leftout.getLayoutX()+this.leftout.getWidth()/2, 
+						this.leftout.getLayoutY()-this.leftout.getHeight());
+			}
 		}
 		if(this.getRightOut()!=null){
 			this.getRightOut().move();
@@ -73,6 +82,7 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		pan.getChildren().add(this.rightout);
 		pan.getChildren().add(this.in);
 		pan.getChildren().add(this.blockfield);
+		pan.getChildren().add(this.notext);
 		this.blockfield.impl_processCSS(true);
 		this.refresh();
 	}

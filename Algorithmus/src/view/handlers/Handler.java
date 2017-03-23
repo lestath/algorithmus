@@ -18,8 +18,8 @@ public class Handler extends Rectangle {
 	public Handler(Block bl, Block connected){
 		this.block = bl;
 		this.connected = connected;
-		this.setWidth(this.block.getSize().getWidth()*0.1);
-		this.setHeight(this.block.getSize().getHeight()*0.2);
+		this.setWidth(this.block.getSize().getWidth()*0.05);
+		this.setHeight(this.block.getSize().getHeight()*0.15);
 	}
 	
 	public Block getBlock() {

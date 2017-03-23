@@ -160,7 +160,7 @@ public class MainController {
   	}
   	
   	private void nodeInitialize(){
-  		this.node = new Node(new NodeBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+  		this.node = new Node(new NodeBlock(new Point(20,this.startpos),Conf.MENU_ELEMS_DIM));
   		this.MenuPane.getChildren().add(this.node);
   		startpos = startpos + move;
   		

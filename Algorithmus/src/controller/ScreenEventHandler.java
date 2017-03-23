@@ -110,19 +110,16 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 			if(src.getArrow()==null){
 				Arrow ar = ViewParams.ACTUAL_ARROW;
 				Handler ph = ViewParams.ACTUAL_HANDLER;
-				if(src.getBlock()==null){
-					System.out.println("Blok przypisywany pusty :(");
-				}else{
-					System.out.println(src.getBlock().getContent());
-				}
-				ph.setConnected(src.getBlock());
-				src.setArrow(ar);
-				
-				InHandler in = (InHandler) src;
-				in.move();
-				ViewParams.ARROW_MODE = false;
-				ViewParams.ARROW_LIST.add(ViewParams.ACTUAL_ARROW);
-				ViewParams.ACTUAL_ARROW = null;
+				  if(src.getBlock()!= ph.getBlock()){
+						ph.setConnected(src.getBlock());
+						src.setArrow(ar);
+						
+						InHandler in = (InHandler) src;
+						in.move();
+						ViewParams.ARROW_MODE = false;
+						ViewParams.ARROW_LIST.add(ViewParams.ACTUAL_ARROW);
+						ViewParams.ACTUAL_ARROW = null;
+				  }
 			}
 			
 		}

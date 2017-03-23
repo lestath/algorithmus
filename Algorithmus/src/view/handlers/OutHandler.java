@@ -4,6 +4,7 @@ package view.handlers;
 import model.Block;
 import model.Conf;
 
+
 /* 
  * Klasa reprezentująca zaczep linii wyjściowej z bloku
  *
@@ -20,7 +21,6 @@ public class OutHandler extends Handler{
 				this.block.getPosition().getX()+this.block.getSize().getWidth()/2-this.getWidth()/2,
 				this.block.getPosition().getY()+this.block.getSize().getHeight()-this.getHeight()/2
 				);
-		
 		// przemieszczenie strzałki
 		if(this.arrow!=null){
 		   this.arrow.getStart().setLocation(
