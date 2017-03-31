@@ -7,6 +7,7 @@ import java.awt.Point;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
+import view.handlers.Handler;
 
 public class Arrow extends Polyline{	
 	private Point start;
@@ -15,40 +16,14 @@ public class Arrow extends Polyline{
 	private Line rightarm;
 	private double armsize = 30;
 	private AnchorPane node;
+	private Handler owner;
 	
+
 	public Arrow(Point start, Point stop,AnchorPane n){
 		this.start = start;
 		this.stop = stop;
 		this.node = n;	
-		double lx;
-		double ly;
-		double rx;
-		double ry;
-		if(start.getX()<stop.getX()){
-			lx = stop.getX() - armsize;
-			rx = stop.getX();
-		}else{
-			lx = stop.getX() + armsize;
-			rx = stop.getX();
-		}
-		
-		if(start.getY()>stop.getY()){
-			ry = stop.getY()+armsize;
-			ly = stop.getY();
-		}else{
-			ry = stop.getY()-armsize;
-			ly = stop.getY();
-		}
-	    this.getPoints().addAll(
-	     start.getX(),
-	     start.getY(),
-	     stop.getX(),
-	     stop.getY()
-	    );
-		this.leftarm = new Line(stop.getX(),stop.getY(),lx,ly);
-	    this.rightarm = new Line(stop.getX(),stop.getY(),rx,ry);
-	    this.node.getChildren().add(this.leftarm);
-	    this.node.getChildren().add(this.rightarm);
+		this.move();
 	    this.node.getChildren().add(this);
 	    this.move(stop.getX(),stop.getY());
 	}
@@ -64,27 +39,6 @@ public class Arrow extends Polyline{
 		this.stop.setLocation(x, y);
 		this.getPoints().set(2,stop.getX());
 		this.getPoints().set(3,stop.getY());
-		double lx;
-		double ly;
-		double rx;
-		double ry;
-		if(start.getX()<stop.getX()){
-			lx = stop.getX() - armsize;
-			rx = stop.getX();
-		}else{
-			lx = stop.getX() + armsize;
-			rx = stop.getX();
-		}
-		
-		if(start.getY()>stop.getY()){
-			ry = stop.getY()+armsize;
-			ly = stop.getY();
-		}else{
-			ry = stop.getY()-armsize;
-			ly = stop.getY();
-		}
-		this.rightarm.relocate(rx,ry);
-		this.leftarm.relocate(lx,ly);
 	}
 
 	public Point getStart() {
@@ -127,6 +81,25 @@ public class Arrow extends Polyline{
 		this.armsize = armsize;
 	}
 	
+
+	public Handler getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Handler owner) {
+		this.owner = owner;
+	}
+	
+	public void move(){
+	    this.getPoints().clear();
+	    this.getPoints().addAll(
+	    		this.start.getX(),
+	    		this.start.getY(),
+	    		this.stop.getX(),
+	    		this.stop.getY()
+	    );
+	}
+
 	
 	
 }

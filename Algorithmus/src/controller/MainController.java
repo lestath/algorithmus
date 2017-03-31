@@ -4,18 +4,20 @@ import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import model.Conf;
 import model.DecisionBlock;
 import model.InputBlock;
+import model.NodeBlock;
 import model.OperatingBlock;
 import model.StartBlock;
 import model.StopBlock;
 import view.blocks.Decision;
 import view.blocks.Input;
+import view.blocks.Node;
 import view.blocks.Operating;
 import view.blocks.Start;
 import view.blocks.Stop;
@@ -49,6 +51,10 @@ public class MainController {
     private AnchorPane MenuPane;
     
 
+    @FXML
+    private Button generatebtn;
+
+
     /**
      * pole graficznej reprezentacji bloku kodu w menu
      */
@@ -57,6 +63,7 @@ public class MainController {
     private Decision decision;
     private Input input;
     private Stop stop;
+    private Node node;
 
 
     @FXML
@@ -74,9 +81,19 @@ public class MainController {
         this.inputInitialize();
         this.outputInitialize();
         this.stopInitialize();
+        this.nodeInitialize();
         this.BlockPane.setOnMouseMoved(new ScreenEventHandler(this,null,null));
         this.BlockPane.setOnMouseClicked(new ScreenEventHandler(this,null,null));
     }
+    
+
+    // metoda wywowływana po wcisnięciu przycisku generate
+    @FXML
+    void generateCode(ActionEvent event) {
+    	CodeMaker.test();
+    }
+
+    
 
     
     public AnchorPane getBlockPane() {
@@ -142,6 +159,15 @@ public class MainController {
   		
   	}
   	
+  	private void nodeInitialize(){
+  		this.node = new Node(new NodeBlock(new Point(20,this.startpos),Conf.MENU_ELEMS_DIM));
+  		this.MenuPane.getChildren().add(this.node);
+  		startpos = startpos + move;
+  		
+  		//eventy
+  		this.node.setOnMouseClicked(new MenuEventHandler(this,this.node.getBlock()));
+  	}
+  	
   	private void stopInitialize(){
   		 this.stop = new Stop(new StopBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
          this.MenuPane.getChildren().add(this.stop);
@@ -150,6 +176,16 @@ public class MainController {
          //eventy
          this.stop.setOnMouseClicked(new MenuEventHandler(this,this.stop.getBlock()));
   	}
+
+
+	public Node getNode() {
+		return node;
+	}
+
+
+	public void setNode(Node node) {
+		this.node = node;
+	}
   	
 
 }

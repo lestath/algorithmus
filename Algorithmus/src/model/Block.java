@@ -7,8 +7,8 @@ import java.awt.*;
  *
  */
 public class Block implements BlockInterface {
-    private Object previous;
-    private Object next;
+    private Block previous;
+    private Block next;
     private Object handle;
     private Point position;
     private Dimension size;
@@ -29,7 +29,7 @@ public class Block implements BlockInterface {
      * Zwraca obiekt poprzedzający ten blok
      * @return (Object) blok poprzedzający
      */
-    public Object getPrevious() {
+    public Block getPrevious() {
         return previous;
     }
 
@@ -37,7 +37,7 @@ public class Block implements BlockInterface {
      * Ustawia blok poprzedzający
      * @param previous blok poprzedzający
      */
-    public void setPrevious(Object previous) {
+    public void setPrevious(Block previous) {
         this.previous = previous;
     }
 
@@ -45,7 +45,7 @@ public class Block implements BlockInterface {
      * Zwraca blok następujący
      * @return (Object) blok następujący
      */
-    public Object getNext() {
+    public Block getNext() {
         return next;
     }
 
@@ -53,7 +53,7 @@ public class Block implements BlockInterface {
      * Ustawia blok następujący
      * @param next blok następujący
      */
-    public void setNext(Object next) {
+    public void setNext(Block next) {
         this.next = next;
     }
 
@@ -144,4 +144,6 @@ public class Block implements BlockInterface {
     public void update() {
 
     }
+    
+    
 }
