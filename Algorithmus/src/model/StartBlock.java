@@ -18,7 +18,6 @@ public class StartBlock extends Block implements BlockInterface{
 	}
 	
 	public String getCode(){
-		return null;
-		
+		return "int main(int args, char* argv[]) {";
 	}
 }

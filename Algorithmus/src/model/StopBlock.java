@@ -17,7 +17,6 @@ public class StopBlock extends Block implements BlockInterface{
 	}
 	
 	public String getCode(){
-		return null;
-		
+		return "}";
 	}
 }

@@ -14,16 +14,11 @@ public class Block implements BlockInterface {
     private Dimension size;
     private String content;
     private String code;
-    
-
 
     Block(Point start,Dimension dim){
      	this.position = start;
      	this.size = dim;
-     }
-    
-
-    
+    }
 
     /**
      * Zwraca obiekt poprzedzający ten blok

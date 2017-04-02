@@ -21,7 +21,16 @@ public class CodeMaker {
 		Block b;
 		for(BlockInterface block : BlocksHolder.blocklist){
 			b = (Block) block;
-			System.out.println(b.getContent());
+
+			if (b.getContent().equals("START")) {
+				System.out.println("int main() {");
+			}
+
+			if (b.getContent().equals("STOP")) {
+				System.out.println("int main() {");
+			}
+
+			//System.out.println(b.getContent());
 		}
 	}
 	
@@ -39,12 +48,12 @@ public class CodeMaker {
 		for(BlockInterface bl : lst){
 			b = (Block) bl;
 			if(b instanceof StartBlock){
-				while(b!=null){
+				while(b != null){
 					if(b instanceof DecisionBlock){
 						db = (DecisionBlock) b;
-						System.out.println("LEWY ->> "+db.getNoblock().getContent());
+						System.out.println("LEWY ->> " + db.getNoblock().getContent());
 					}
-					System.out.println(b.getContent());
+					System.out.println(b.getCode());
 					b = b.getNext();
 				}
 				break;
