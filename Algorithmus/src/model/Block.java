@@ -7,34 +7,24 @@ import java.awt.*;
  *
  */
 public class Block implements BlockInterface {
-    private Object previous;
-    private Object next;
+    private Block previous;
+    private Block next;
     private Object handle;
     private Point position;
     private Dimension size;
     private String content;
     private String code;
 
-    /**
-     * Konstruktok bloku
-     * @param x Pozycja x obiektu na ekranie
-     * @param y Pozycja y obiektu na ekranie
-     */
-    Block (int x, int y) {
-        this.previous = null;
-        this.next = null;
-        this.handle = null;
-        this.position = new Point(0, 0);
-        this.size = new Dimension(x, y);
-        this.content = "Type code here...";
-        this.code = null;
+    Block(Point start,Dimension dim){
+     	this.position = start;
+     	this.size = dim;
     }
 
     /**
      * Zwraca obiekt poprzedzający ten blok
      * @return (Object) blok poprzedzający
      */
-    public Object getPrevious() {
+    public Block getPrevious() {
         return previous;
     }
 
@@ -42,7 +32,7 @@ public class Block implements BlockInterface {
      * Ustawia blok poprzedzający
      * @param previous blok poprzedzający
      */
-    public void setPrevious(Object previous) {
+    public void setPrevious(Block previous) {
         this.previous = previous;
     }
 
@@ -50,7 +40,7 @@ public class Block implements BlockInterface {
      * Zwraca blok następujący
      * @return (Object) blok następujący
      */
-    public Object getNext() {
+    public Block getNext() {
         return next;
     }
 
@@ -58,7 +48,7 @@ public class Block implements BlockInterface {
      * Ustawia blok następujący
      * @param next blok następujący
      */
-    public void setNext(Object next) {
+    public void setNext(Block next) {
         this.next = next;
     }
 
@@ -149,4 +139,6 @@ public class Block implements BlockInterface {
     public void update() {
 
     }
+    
+    
 }

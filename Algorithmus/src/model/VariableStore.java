@@ -10,12 +10,10 @@ import java.util.Map;
 
 /**
  *
- * @author Mateusz Pełka <mat.pelka at gmail.com>
+ * @author Mateusz Pełka to chuj
  */
 public class VariableStore {
     Map<String,Integer> intmap = new HashMap<String,Integer>();
     Map<String,Double> doublemap = new HashMap<String,Double>();
     Map<String,String> stringmap = new HashMap<String,String>();
-    
-    
 }
