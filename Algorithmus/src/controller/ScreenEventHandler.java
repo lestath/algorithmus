@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Polyline;
 import model.Block;
 import model.interfaces.GraphicsBlockInterface;
 import view.Arrows.Arrow;
@@ -26,35 +27,54 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	
 
 	ScreenEventHandler(MainController c,Block b, GraphicsBlockInterface inter){
+		this.cont = c;
 		this.block = b;
 		this.gpb = inter;
-		this.cont = c;
 	}
-	
+
 	@Override
 	public void handle(MouseEvent event) {
 		    // jeżeli przesuniecie wcisnietego przycisku
 			if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
+				if(ViewParams.MODE.equals(Mode.Delete)){
+					if(event.getSource() instanceof Arrow){
+						this.deleteArrow(event);
+					}
+					System.out.println("Tryb usunięcia bloku");
+					return;
+				}
 				if(event.getSource() instanceof InHandler){
 					this.inputHandlerService(event);
 				}else if(event.getSource() instanceof OutHandler){
 					this.outputHandlerService(event);
 				}else if(event.getSource() instanceof AnchorPane){
-					if(ViewParams.ARROW_MODE){
+					if(ViewParams.MODE.equals(Mode.Arrow)){
 						//this.arrowOnScreenMoveService(event);
 					}	
 				}
 			}else if(event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)){
-				if(!ViewParams.ARROW_MODE){
+				if(ViewParams.MODE.equals(Mode.Normal)){
 					this.moveBlock(event);		
 				}
 			}else if(event.getEventType().equals(MouseEvent.MOUSE_MOVED)){
-				if(ViewParams.ARROW_MODE){
+				if(ViewParams.MODE.equals(Mode.Arrow)){
 					this.arrowMove(event);
 				}
 			} 
 	}
 	
+	/**
+	 * Metoda usuwająca strzałkę łączącą
+	 */
+	private void deleteArrow(MouseEvent event) {
+		Arrow ar = (Arrow) event.getSource();
+		if(ar.getEnder()!= null) ar.getEnder().setArrow(null);
+		ar.getOwner().removeConnection();
+		ViewParams.ARROW_LIST.remove(ar);
+		this.cont.BlockPane.getChildren().remove(ar);
+		System.out.println("usunięto strzalkę");
+	}
+
 	/**
 	 * Metoda obsługi kliknięcia na screen gdy jest w trybie strzałek
 	 * @param event
@@ -65,7 +85,7 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 		ViewParams.ARROW_LIST.remove(ViewParams.ACTUAL_ARROW);
 		ViewParams.ACTUAL_HANDLER = null;
 		ViewParams.ACTUAL_ARROW = null;
-		ViewParams.ARROW_MODE = false;
+		ViewParams.MODE = Mode.Normal;
 	}
 	
 
@@ -74,6 +94,7 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 * @pam event
 	 */
 	private void arrowMove(MouseEvent event) {
+		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		// TODO obsluga strzałki  (łacznika bloków)
 		Arrow ar = ViewParams.ACTUAL_ARROW;
 		ar.move(event.getX()-10,event.getY()-10);
@@ -85,6 +106,7 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 * 				Parametr zdarzenia myszy
 	 */
 	private void moveBlock(MouseEvent event){
+		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		double x = this.block.getPosition().getX();
 		double y = this.block.getPosition().getY();
 		Bounds b = cont.BlockPane.localToScene(cont.BlockPane.getBoundsInLocal());
@@ -103,6 +125,7 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 * 				Zdarzenie myszy
 	 */
 	private void inputHandlerService(MouseEvent event){
+		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		//TODO obsługa zaczepu wejściowego
 		System.out.println("Wcisnieto zaczep wejscia");
 		if(ViewParams.ACTUAL_ARROW!= null){
@@ -113,10 +136,11 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 				  if(src.getBlock()!= ph.getBlock()){
 						ph.setConnected(src.getBlock());
 						src.setArrow(ar);
-						
+						ar.setEnder(src);
+						ar.setOnMouseClicked(new ScreenEventHandler(this.cont,this.block,this.gpb));
 						InHandler in = (InHandler) src;
 						in.move();
-						ViewParams.ARROW_MODE = false;
+						ViewParams.MODE = Mode.Normal;
 						ViewParams.ARROW_LIST.add(ViewParams.ACTUAL_ARROW);
 						ViewParams.ACTUAL_ARROW = null;
 				  }
@@ -132,13 +156,14 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 * 			Zdarzenie myszy
 	 */
 	private void outputHandlerService(MouseEvent event){
+		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		//TODO obsługa zaczepu wyjściowego
 		if(ViewParams.ACTUAL_ARROW== null){
 			System.out.println("Wcisnieto zaczep wyjscia");
 			Handler src  = (Handler)event.getSource();
 			if(src.getArrow()==null){ // sprawdzenie cze nie ma już podpięcia
 				ViewParams.ACTUAL_HANDLER = src;
-				ViewParams.ARROW_MODE = true;
+				ViewParams.MODE = Mode.Arrow;
 				ViewParams.ACTUAL_ARROW = new Arrow(
 						 new Point((int)(src.getLayoutX()+src.getWidth()/2),(int)(src.getLayoutY()+src.getWidth()/2))
 						, new Point((int)src.getLayoutX()+50,(int)src.getLayoutY()+50)

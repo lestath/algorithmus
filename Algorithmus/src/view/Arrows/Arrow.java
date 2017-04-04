@@ -16,7 +16,8 @@ public class Arrow extends Polyline{
 	private Line rightarm;
 	private double armsize = 30;
 	private AnchorPane node;
-	private Handler owner;
+	private Handler owner; // wlasciciel stralki wyjscie strzalki
+	private Handler ender; // handler na koncu strzalki (wejscie stralki)
 	
 
 	public Arrow(Point start, Point stop,AnchorPane n){
@@ -26,6 +27,7 @@ public class Arrow extends Polyline{
 		this.move();
 	    this.node.getChildren().add(this);
 	    this.move(stop.getX(),stop.getY());
+	    this.setStrokeWidth(5);
 	}
 	
 	/**
@@ -90,6 +92,16 @@ public class Arrow extends Polyline{
 		this.owner = owner;
 	}
 	
+	
+	
+	public Handler getEnder() {
+		return ender;
+	}
+
+	public void setEnder(Handler ender) {
+		this.ender = ender;
+	}
+
 	public void move(){
 	    this.getPoints().clear();
 	    this.getPoints().addAll(

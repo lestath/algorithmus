@@ -18,6 +18,7 @@ import view.blocks.Node;
 import view.blocks.Operating;
 import view.blocks.Start;
 import view.blocks.Stop;
+import view.graphicsbuttons.DeleteButton;
 
 import java.awt.Dimension;
 
@@ -55,9 +56,13 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 			this.stopHandle();
 		}else if(this.generator instanceof NodeBlock){
 			this.nodeHandle();
+		}else if(this.generator instanceof DeleteButton){
+			this.deleteHandle();
 		}
 	}
 	
+
+
 	private void nodeHandle() {
 		NodeBlock myblock = new NodeBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
 		 Node op = new Node(myblock);
@@ -154,6 +159,16 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 
 		 //TODO linijka ponizej do wyrzucenia
 		// CodeMaker.generateCode();
+	}
+	
+	private void deleteHandle() {
+		if(ViewParams.MODE.equals(Mode.Delete)){
+			ViewParams.MODE = Mode.Normal;
+			this.controller.getDelete().setNormalLook();
+		}else{
+			ViewParams.MODE = Mode.Delete;
+			this.controller.getDelete().setDeleteLook();
+		}
 	}
 	
 }

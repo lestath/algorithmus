@@ -21,6 +21,7 @@ import view.blocks.Node;
 import view.blocks.Operating;
 import view.blocks.Start;
 import view.blocks.Stop;
+import view.graphicsbuttons.DeleteButton;
 
 
 /**
@@ -64,6 +65,7 @@ public class MainController {
     private Input input;
     private Stop stop;
     private Node node;
+    private DeleteButton delete;
 
 
     @FXML
@@ -82,12 +84,13 @@ public class MainController {
         this.outputInitialize();
         this.stopInitialize();
         this.nodeInitialize();
+        this.deleteInitialize();
         this.BlockPane.setOnMouseMoved(new ScreenEventHandler(this,null,null));
         this.BlockPane.setOnMouseClicked(new ScreenEventHandler(this,null,null));
     }
     
 
-    // metoda wywowływana po wcisnięciu przycisku generate
+	// metoda wywowływana po wcisnięciu przycisku generate
     @FXML
     void generateCode(ActionEvent event) {
     	CodeMaker.test();
@@ -176,10 +179,32 @@ public class MainController {
          //eventy
          this.stop.setOnMouseClicked(new MenuEventHandler(this,this.stop.getBlock()));
   	}
+  	
+    private void deleteInitialize() {
+ 		 this.delete = new DeleteButton(new Point(10,this.startpos+3*move));
+         this.MenuPane.getChildren().add(this.delete);
+         startpos = startpos + move;
+         
+         //eventy
+         this.delete.setOnMouseClicked(new MenuEventHandler(this,this.delete ));
+	}
+
+
 
 
 	public Node getNode() {
 		return node;
+	}
+
+	
+
+	public DeleteButton getDelete() {
+		return delete;
+	}
+
+
+	public void setDelete(DeleteButton delete) {
+		this.delete = delete;
 	}
 
 

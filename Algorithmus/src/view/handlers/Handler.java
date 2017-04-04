@@ -12,7 +12,7 @@ import view.Arrows.Arrow;
 public class Handler extends Rectangle {
 	Block block; // blok własciciel handlera
 	Block connected; // trzyma konkretne wejście/wyjscie
-	Arrow arrow; // strzałka w handlerze
+	Arrow arrow; // strzałka w handlerze wejsciowa do bloku
 
 	// pierwszy parametr to blok który jest właścicielem handlera, drugi to skojarzenie konkretnego wejścia innego bloku
 	public Handler(Block bl, Block connected){
@@ -39,6 +39,15 @@ public class Handler extends Rectangle {
 		System.out.println("Podłączam nastepnik");
 		System.out.println(this.connected.getContent());
 		
+	}
+	
+	/**
+	 * metoda usuwa połączenie bloków
+	 */
+	public void removeConnection(){
+		this.connected = null;
+		this.block.setNext(null);
+		this.arrow = null;
 	}
 	
 	public Arrow getArrow() {
