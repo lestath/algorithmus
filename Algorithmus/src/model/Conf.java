@@ -14,6 +14,8 @@ import javafx.scene.paint.Paint;
 public class Conf {
 	public enum BLOCK{START,DECISION,OPERATING,INPUT,STOP};
 	public static Dimension MENU_ELEMS_DIM = new Dimension(60,30);
+	public static Dimension DELETE_BTN_DIM = new Dimension(40,40);
+	public static Dimension NODE_DIM = new Dimension(30,30);
 	public static Point NEW_ELEMENT_POS = new Point(10,10);
 	public static Paint BLOCK_COLOR = Paint.valueOf("royalblue");
 	public static Paint NODE_COLOR = Paint.valueOf("grey");

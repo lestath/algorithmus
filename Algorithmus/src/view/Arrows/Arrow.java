@@ -3,7 +3,7 @@ package view.Arrows;
 
 import java.awt.Point;
 
-
+import controller.ViewParams;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
@@ -17,7 +17,7 @@ public class Arrow extends Polyline{
 	private double armsize = 30;
 	private AnchorPane node;
 	private Handler owner; // wlasciciel stralki wyjscie strzalki
-	private Handler ender; // handler na koncu strzalki (wejscie stralki)
+	private Handler ender; // handler na koncu strzalki (wejscie strzalki)
 	
 
 	public Arrow(Point start, Point stop,AnchorPane n){
@@ -27,7 +27,7 @@ public class Arrow extends Polyline{
 		this.move();
 	    this.node.getChildren().add(this);
 	    this.move(stop.getX(),stop.getY());
-	    this.setStrokeWidth(5);
+	    this.setStrokeWidth(2);
 	}
 	
 	/**
@@ -107,11 +107,25 @@ public class Arrow extends Polyline{
 	    this.getPoints().addAll(
 	    		this.start.getX(),
 	    		this.start.getY(),
+	    		this.start.getX(),
+	    		this.start.getY()+10,
+	    		this.stop.getX(),
+	    		this.start.getY()+10,
+	    		this.stop.getX(),
+	    		this.stop.getY()-10,
 	    		this.stop.getX(),
 	    		this.stop.getY()
 	    );
 	}
 
-	
-	
+	public void delete(){
+		if(getOwner() != null){
+			getOwner().setConnected(null);
+			getOwner().getBlock().setNext(null);
+			getOwner().setArrow(null);
+		}
+		if(getEnder()!= null)getEnder().setArrow(null);
+		ViewParams.ARROW_LIST.remove(this);
+		node.getChildren().remove(this);
+	}
 }

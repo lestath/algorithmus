@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import model.Conf;
 import model.DecisionBlock;
@@ -55,6 +56,13 @@ public class MainController {
     @FXML
     private Button generatebtn;
 
+    @FXML
+    private Button generatebtn1;
+
+    @FXML
+    private ScrollPane scrollpane;
+
+
 
     /**
      * pole graficznej reprezentacji bloku kodu w menu
@@ -87,6 +95,15 @@ public class MainController {
         this.deleteInitialize();
         this.BlockPane.setOnMouseMoved(new ScreenEventHandler(this,null,null));
         this.BlockPane.setOnMouseClicked(new ScreenEventHandler(this,null,null));
+        ViewParams.ctrl = this;
+        //nasłuch skalowania sceny
+        ViewParams.stg.widthProperty().addListener((obs, oldVal, newVal) -> {
+        	 ViewParams.ctrl.resizeAll();
+       });
+
+        ViewParams.stg.heightProperty().addListener((obs, oldVal, newVal) -> {
+        	 ViewParams.ctrl.resizeAll();
+       });
     }
     
 
@@ -163,7 +180,7 @@ public class MainController {
   	}
   	
   	private void nodeInitialize(){
-  		this.node = new Node(new NodeBlock(new Point(20,this.startpos),Conf.MENU_ELEMS_DIM));
+  		this.node = new Node(new NodeBlock(new Point(20,this.startpos),Conf.NODE_DIM));
   		this.MenuPane.getChildren().add(this.node);
   		startpos = startpos + move;
   		
@@ -181,8 +198,9 @@ public class MainController {
   	}
   	
     private void deleteInitialize() {
- 		 this.delete = new DeleteButton(new Point(10,this.startpos+3*move));
+ 		 this.delete = new DeleteButton(new Point(20,this.startpos+3*move));
          this.MenuPane.getChildren().add(this.delete);
+         this.resizeAll();
          startpos = startpos + move;
          
          //eventy
@@ -210,6 +228,25 @@ public class MainController {
 
 	public void setNode(Node node) {
 		this.node = node;
+	}
+	
+	/**
+	 * Metoda skalująca okno
+	 */
+	public void resizeAll(){
+		 AnchorPane pan = (AnchorPane) this.MenuPane.getParent(); 
+		 pan.setPrefHeight(ViewParams.stg.getHeight()-50);
+		 pan.setMinHeight(560);
+		 pan.setPrefWidth(ViewParams.stg.getWidth());
+		 this.MenuPane.setPrefHeight(pan.getPrefHeight());
+		 this.scrollpane.setPrefHeight(pan.getPrefHeight()-20);
+		 this.scrollpane.setPrefWidth(pan.getPrefWidth()-this.MenuPane.getPrefWidth()-this.generatebtn.getPrefWidth()-30);
+		 System.out.println("wymiar " + pan.getPrefHeight());
+		 double btnx = this.scrollpane.getPrefWidth()+this.MenuPane.getPrefWidth()+20;
+		 this.generatebtn.setLayoutX(btnx);
+		 this.generatebtn1.setLayoutX(btnx);
+		 this.delete.relocate(this.delete.getX()+20,pan.getPrefHeight()-this.delete.getHeight()*2);
+		 
 	}
   	
 

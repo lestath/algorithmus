@@ -4,6 +4,7 @@ package view.blocks;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Ellipse;
+import model.BlocksHolder;
 import model.Conf;
 import model.StartBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -73,5 +74,14 @@ public class Start extends Ellipse implements GraphicsBlockInterface{
 	}
 	public OutHandler getOut() {
 		return this.outhandler;
+	}
+	@Override
+	public void delete() {
+		this.outhandler.removeHandler();
+		BlocksHolder.blocklist.remove(this.block);
+		AnchorPane pan = (AnchorPane)this.getParent();
+		pan.getChildren().remove(this.blocklabel);
+		this.block = null;
+		pan.getChildren().remove(this);
 	}
 }

@@ -33,9 +33,10 @@ public class LeftOutHandler extends OutHandler{
 		this.connected = connected;
 		DecisionBlock db = (DecisionBlock) this.block;
 		db.setNoblock(this.connected);
-		System.out.println("Podłączam nastepnik lewy na nie");
-		System.out.println(this.connected.getContent());
-		
+		if(this.connected!= null){
+			System.out.println("Podłączam nastepnik lewy na nie");
+			System.out.println(this.connected.getContent());
+		}
 	}
 	
 }

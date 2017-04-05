@@ -1,6 +1,7 @@
 package application;
 	
 
+import controller.ViewParams;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader window = new FXMLLoader();
 			window.setLocation(this.getClass().getResource("/view/MainView.fxml"));
+			ViewParams.stg = primaryStage;
 			StackPane pane = window.load();
 			Scene scene = new Scene(pane);
 			primaryStage.setTitle("Algorithmus");

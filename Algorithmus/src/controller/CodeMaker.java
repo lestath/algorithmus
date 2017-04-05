@@ -20,8 +20,9 @@ public class CodeMaker {
 		//TODO to tylko kod testowy
 		Block b;
 		for(BlockInterface block : BlocksHolder.blocklist){
+			
 			b = (Block) block;
-
+			/*
 			if (b.getContent().equals("START")) {
 				System.out.println("int main() {");
 			}
@@ -29,15 +30,16 @@ public class CodeMaker {
 			if (b.getContent().equals("STOP")) {
 				System.out.println("int main() {");
 			}
-
-			//System.out.println(b.getContent());
+			*/
+			System.out.println(b.getContent());
 		}
 	}
 	
 	//TODO algorytm generowania kodu kodu
 	// w tej metodzie można przeprowadzać testy algorytmów generowania kodu 
 	public static void test(){
-		ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
+		generateCode();
+	/*	ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
 		Block b;
 		DecisionBlock db;
 		boolean start = checkSingleStartBlock();
@@ -58,7 +60,8 @@ public class CodeMaker {
 				}
 				break;
 			}
-		}
+		
+		}*/
 		
 
 

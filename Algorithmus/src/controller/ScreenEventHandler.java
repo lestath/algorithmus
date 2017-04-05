@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Polyline;
 import model.Block;
 import model.interfaces.GraphicsBlockInterface;
 import view.Arrows.Arrow;
@@ -32,13 +31,18 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 		this.gpb = inter;
 	}
 
+	// Obsługa zdarzeń myszy na ekranie rysowania
 	@Override
 	public void handle(MouseEvent event) {
 		    // jeżeli przesuniecie wcisnietego przycisku
-			if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
+			if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){	
 				if(ViewParams.MODE.equals(Mode.Delete)){
 					if(event.getSource() instanceof Arrow){
-						this.deleteArrow(event);
+						this.deleteArrow(event); // usuwanie strzałki
+					}else if(!(event.getSource() instanceof AnchorPane)){
+						if(event.getSource() instanceof Handler )return;
+						GraphicsBlockInterface gbi = (GraphicsBlockInterface) event.getSource(); 
+						gbi.delete(); // usuwanie bloku
 					}
 					System.out.println("Tryb usunięcia bloku");
 					return;
@@ -68,10 +72,7 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 */
 	private void deleteArrow(MouseEvent event) {
 		Arrow ar = (Arrow) event.getSource();
-		if(ar.getEnder()!= null) ar.getEnder().setArrow(null);
 		ar.getOwner().removeConnection();
-		ViewParams.ARROW_LIST.remove(ar);
-		this.cont.BlockPane.getChildren().remove(ar);
 		System.out.println("usunięto strzalkę");
 	}
 

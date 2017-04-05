@@ -15,7 +15,7 @@ public class Block implements BlockInterface {
     private String content;
     private String code;
 
-    Block(Point start,Dimension dim){
+    public Block(Point start,Dimension dim){
      	this.position = start;
      	this.size = dim;
     }

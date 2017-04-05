@@ -3,6 +3,7 @@ package view.blocks;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Ellipse;
+import model.BlocksHolder;
 import model.Conf;
 import model.StopBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -70,6 +71,15 @@ public class Stop extends Ellipse implements GraphicsBlockInterface{
 	}
 	public void setIn(InHandler in) {
 		this.in = in;
+	}
+	@Override
+	public void delete() {
+		this.in.removeHandler();
+		BlocksHolder.blocklist.remove(this.block);
+		AnchorPane pan = (AnchorPane)this.getParent();
+		pan.getChildren().remove(this.blocklabel);
+		this.block = null;
+		pan.getChildren().remove(this);
 	}
 	
 	

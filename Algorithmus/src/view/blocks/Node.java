@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Ellipse;
+import model.BlocksHolder;
 import model.Conf;
 import model.NodeBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -23,7 +24,7 @@ public class Node extends Ellipse implements GraphicsBlockInterface{
 	
 	public Node(NodeBlock block){
 		this.block = block;
-		this.block.setSize(new Dimension((int)block.getSize().getHeight(),(int)block.getSize().getHeight()));
+		this.block.setSize(new Dimension((int)block.getSize().getWidth(),(int)block.getSize().getHeight()));
 		this.setRadiusX(block.getSize().getWidth()/2);
 		this.setRadiusY(block.getSize().getHeight()/2);
 		this.setFill(Conf.NODE_COLOR);
@@ -56,6 +57,11 @@ public class Node extends Ellipse implements GraphicsBlockInterface{
 		this.setOut(new OutHandler(this.getBlock(),this.getBlock().getNext()));
 		this.setLeftin(new LeftInHandler(this.getBlock(),this.getBlock().getLeftinblock()));
 		this.setRightin(new RightInHandler(this.getBlock(),this.getBlock().getRaightinblock()));
+		double w = this.block.getSize().getWidth()*0.15;
+		this.in.setWidth(w);
+		this.out.setWidth(w);
+		this.leftin.setWidth(w);
+		this.rightin.setWidth(w);
 		pan.getChildren().add(this.in);
 		pan.getChildren().add(this.out);
 		pan.getChildren().add(this.leftin);
@@ -111,6 +117,20 @@ public class Node extends Ellipse implements GraphicsBlockInterface{
 
 	public void setRightin(RightInHandler rightin) {
 		this.rightin = rightin;
+	}
+
+
+	@Override
+	public void delete() {
+		this.in.removeHandler();
+		this.out.removeHandler();
+		this.leftin.removeHandler();
+		this.rightin.removeHandler();
+		AnchorPane pan = (AnchorPane)this.getParent();
+		BlocksHolder.blocklist.remove(this.block);
+		this.block = null;
+
+		pan.getChildren().remove(this);
 	}
 	
 	

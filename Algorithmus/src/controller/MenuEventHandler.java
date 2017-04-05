@@ -64,12 +64,13 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 
 
 	private void nodeHandle() {
-		NodeBlock myblock = new NodeBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
+		NodeBlock myblock = new NodeBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.NODE_DIM.clone());
 		 Node op = new Node(myblock);
 		 BlocksHolder.blocklist.add(myblock);
 		
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
-		
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 
 		 this.controller.getBlockPane().getChildren().add(op);
 		 
 		 op.prepair(this.controller.getBlockPane());
@@ -86,6 +87,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		
 		 //eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
 
 		  
@@ -102,6 +104,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 			 BlocksHolder.blocklist.add(myblock);
 			
 			 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+			 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 			
 			 this.controller.getBlockPane().getChildren().add(op);
 			 
@@ -118,6 +121,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 
 		 // eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
 		
 		 
@@ -135,6 +139,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		
 		 //eventy
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
 		 
 		 
@@ -150,6 +155,7 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		 Stop op = new Stop(myblock);
 		 BlocksHolder.blocklist.add(myblock);
 		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
 		 assert this.controller != null : "Empty contorrler";
 		 this.controller.getBlockPane().getChildren().add(op);
 		 assert this.controller.getBlockPane() != null : "Block pane null";

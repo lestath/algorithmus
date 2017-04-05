@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import model.BlocksHolder;
 import model.Conf;
 import model.DecisionBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -123,6 +124,20 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 	}
 	public void setRightOut(RightOutHandler rightout) {
 		this.rightout = rightout;
+	}
+	@Override
+	public void delete() {
+		this.in.removeHandler();
+		this.leftout.removeHandler();
+		this.rightout.removeHandler();
+		BlocksHolder.blocklist.remove(this.block);
+		AnchorPane pan = (AnchorPane)this.getParent();
+		pan.getChildren().remove(this);
+		pan.getChildren().remove(this.blockfield);
+		pan.getChildren().remove(this.notext);
+		this.block = null;
+		this.blockfield = null;
+		this.notext = null;
 	}
 
 }

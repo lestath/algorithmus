@@ -13,4 +13,7 @@ public interface GraphicsBlockInterface {
 	// przygotowanie elementu do wyświetlenia w bloku głównym
 	public void prepair(AnchorPane pan);
 	
+	//usunięcie bloku
+	public void delete();
+	
 }

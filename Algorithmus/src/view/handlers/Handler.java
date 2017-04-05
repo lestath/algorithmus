@@ -1,5 +1,7 @@
 package view.handlers;
 
+
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import model.Block;
 import view.Arrows.Arrow;
@@ -34,20 +36,22 @@ public class Handler extends Rectangle {
 	}
 
 	public void setConnected(Block connected) {
+		
 		this.connected = connected;
 		this.block.setNext(this.connected);
-		System.out.println("Podłączam nastepnik");
-		System.out.println(this.connected.getContent());
-		
+		if(this.connected!= null){
+			System.out.println("Podłączam nastepnik");
+			System.out.println(this.connected.getContent());
+		}
 	}
 	
 	/**
 	 * metoda usuwa połączenie bloków
 	 */
 	public void removeConnection(){
-		this.connected = null;
-		this.block.setNext(null);
-		this.arrow = null;
+		if(arrow!=null){
+			arrow.delete();
+		}
 	}
 	
 	public Arrow getArrow() {
@@ -57,5 +61,11 @@ public class Handler extends Rectangle {
 	public void setArrow(Arrow arrow) {
 		this.arrow = arrow;
 	}
-
+	public void removeHandler() {
+		this.removeConnection();
+		this.block = null;
+		this.connected = null;
+		AnchorPane pan = (AnchorPane)this.getParent();
+		pan.getChildren().remove(this);
+	}
 }

@@ -3,6 +3,7 @@ package view.blocks;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
+import model.BlocksHolder;
 import model.Conf;
 import model.InputBlock;
 import model.interfaces.GraphicsBlockInterface;
@@ -99,6 +100,19 @@ public class Input extends Polygon implements GraphicsBlockInterface{
 	}
 	public void setOut(OutHandler out) {
 		this.out = out;
+	}
+	@Override
+	public void delete() {
+		this.in.removeHandler();
+		this.out.removeHandler();
+		BlocksHolder.blocklist.remove(this.block);
+		AnchorPane pan = (AnchorPane)this.getParent();
+		pan.getChildren().remove(this.blockfield);
+		
+		this.block = null;
+		this.blockfield = null;
+		
+		pan.getChildren().remove(this);
 	}
 
 }
