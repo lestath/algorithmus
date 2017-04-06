@@ -17,6 +17,8 @@ public class Main extends Application {
 			FXMLLoader window = new FXMLLoader();
 			window.setLocation(this.getClass().getResource("/view/MainView.fxml"));
 			ViewParams.stg = primaryStage;
+			primaryStage.setMinWidth(600);
+			primaryStage.setMinHeight(600);
 			StackPane pane = window.load();
 			Scene scene = new Scene(pane);
 			primaryStage.setTitle("Algorithmus");

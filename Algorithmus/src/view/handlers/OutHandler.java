@@ -27,7 +27,7 @@ public class OutHandler extends Handler{
 				    this.getLayoutX() + this.getWidth()/2,
 				   	this.getLayoutY()+ this.getHeight()/2
 				   );
-		   this.arrow.move();
+		   this.arrow.moveForMouse();
 		}
 	}
 	
