@@ -17,6 +17,7 @@ import view.handlers.RightOutHandler;
 
 public class Arrow extends Polyline{	
 	private enum WhereToGo{LEFT,RIGHT};
+	private boolean enderhigher; // ustawiona zostaje na true jeżeli blok wejścia jest wyżej niż blok wyjścia
 	private Point start;
 	private Point stop;
 	private Line leftarm;
@@ -32,6 +33,7 @@ public class Arrow extends Polyline{
 		this.stop = stop;
 		this.node = n;	
 	    this.node.getChildren().add(this);
+	    this.enderhigher = false;
 	    this.move(stop.getX(),stop.getY());
 	    this.setStrokeWidth(2);
 	}
@@ -133,8 +135,8 @@ public class Arrow extends Polyline{
 	 */
 	private void generateRoute() {
 		this.getPoints().clear();
-		this.getPoints().add(this.start.getX());
-		this.getPoints().add(this.start.getY());
+		this.getPoints().add(this.start.getX());  //0
+		this.getPoints().add(this.start.getY());  //1
 		// ustalenie z jakim wyjściem mamy do czynienia i dorzucenie odpowiedniego punktu
 		this.establishOut();
 		//wygenerowanie lini pośredniej
@@ -168,54 +170,83 @@ public class Arrow extends Polyline{
 			if(this.owner instanceof LeftOutHandler){
 				this.getPoints().add(this.start.getX()-10);
 				this.getPoints().add(this.start.getY());
+				this.getPoints().add(this.getPoints().get(2));
+				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+15);
 			}else if(this.owner instanceof RightOutHandler){
-				this.getPoints().add(this.start.getX()+10);
-				this.getPoints().add(this.start.getY());
+				this.getPoints().add(this.start.getX()+10); //2
+				this.getPoints().add(this.start.getY());    //3
+				this.getPoints().add(this.getPoints().get(2));
+				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+10);
 			}else{
 				this.getPoints().add(this.start.getX());
 				this.getPoints().add(this.start.getY()+10);
+				this.getPoints().add(this.start.getX());
+				this.getPoints().add(this.start.getY()+16);
 			}
 		}
 	}
 	
 	/**
-	 * Ustalenie przebiegu lini pośredniej
+	 * Ustalenie przebiegu lini pośredniej w zalezności od ustawienia bloczków względem siebie
 	 */
 	private void setInnerLine() {
 		this.getPoints().add(this.stop.getX());
-		this.getPoints().add(this.getPoints().get(3));
+		this.getPoints().add(this.getPoints().get(5));
 		if(this.start.getX()>=this.stop.getX()){ // sprawdzenie pojscia w lewo
 			if(this.start.getY()<=this.stop.getY()){ // sprawdzenie czy bloczek wyjscia na gorze
-				System.out.println("Weszło do kolizji");
-				this.getPoints().add(this.stop.getX()-this.getColisionMove(
-															this.owner.getBlock().getPosition().getY(),
-															this.ender.getBlock().getPosition().getY(),
-															this.stop.getX(),
-															WhereToGo.LEFT
-													  ));
-				this.getPoints().add(this.getPoints().get(5));
-				this.getPoints().add(this.getPoints().get(6));
-				this.getPoints().add(this.stop.getY()-10);
+				this.innerPointsSet(this.owner,this.ender,WhereToGo.LEFT);
+				this.enderhigher = false;
 			}else{//bloczek wyjscia na dole
-				//TODO sytuacja nietypowa z dolu do gory przejscie (trzeba ominąc siebie samego)
+				this.innerPointsSet(this.ender,this.owner,WhereToGo.LEFT);
+				this.enderhigher = true;
 			}
 		}else{ // idziemy w prawo
 			if(this.start.getY()<=this.stop.getY()){ // sprawdzenie czy bloczek wyjscia na gorze
-				System.out.println("Weszło do kolizji");
-				this.getPoints().add(this.stop.getX()+this.getColisionMove(
-															this.owner.getBlock().getPosition().getY(),
-															this.ender.getBlock().getPosition().getY(),
-															this.stop.getX(),
-															WhereToGo.RIGHT
-													  ));
-				this.getPoints().add(this.getPoints().get(5));
-				this.getPoints().add(this.getPoints().get(6));
-				this.getPoints().add(this.stop.getY()-10);
+				this.innerPointsSet(this.owner,this.ender,WhereToGo.RIGHT);
+				this.enderhigher = false;
 			}else{//bloczek wyjscia na dole
-				//TODO sytuacja nietypowa z dolu do gory przejscie (trzeba ominąc siebie samego)
+				this.innerPointsSet(this.ender,this.owner,WhereToGo.RIGHT);
+				this.enderhigher = true;
 			}
 		}
 	}
+	
+	/**
+	 * metoda dobiera zbiór punktów pośrednich tak abu omijały bloczki
+	 * @param start
+	 * 				Handler, który jest wyżej
+	 * @param stop
+	 * 				Handler, który jest niżej
+	 * @param where
+	 * 				określenie czy wyższy bliczek znajduje się na lewo czy prawo od niższego
+	 */
+	private void innerPointsSet(Handler start,Handler stop, WhereToGo where){
+		System.out.println("Weszło do kolizji");
+		switch(where){
+			case LEFT:
+				this.getPoints().add(this.stop.getX()-this.getColisionMove(
+						start.getBlock().getPosition().getY(),
+						stop.getBlock().getPosition().getY(),
+						this.stop.getX(),
+						where
+				  ));
+			break;
+			case RIGHT:
+				this.getPoints().add(this.stop.getX()+this.getColisionMove(
+						start.getBlock().getPosition().getY(),
+						stop.getBlock().getPosition().getY(),
+						this.stop.getX(),
+						where
+				  ));
+			break;
+		
+		}
+
+		this.getPoints().add(this.getPoints().get(7));
+		this.getPoints().add(this.getPoints().get(8));
+		this.getPoints().add(this.stop.getY()-10);
+	}
+	
 	/**
 	 * Metoda sprawdza czy nastepuje kolizja jeżeli tak to zwraca przesunięcie
 	 * @param start
@@ -228,8 +259,7 @@ public class Arrow extends Polyline{
 	 * 			Sprawdza czy idziemy w lewo czy w prawo
 	 * @return
 	 * 			zwraca przesunięcie kolizji
-	 */
-
+	 **/
 	private double getColisionMove(double start,double stop,double x,WhereToGo w){
 		
 		double yy;
@@ -241,13 +271,20 @@ public class Arrow extends Polyline{
 				blo = (Block)b;
 				yy=blo.getPosition().getY();
 				xx=blo.getPosition().getX();
-				System.out.println("jestesmy w iteratorze 1");
-				if(yy>start && yy<stop){
-					System.out.println("jestesmy w iteratorze 2");
-					if(xx<=x && x<= xx + blo.getSize().getWidth()){
-						colision = x-xx+10; 	
+				if(this.enderhigher){
+					if(yy>=start && yy<=stop){
+						if(xx<=x && x<= xx + blo.getSize().getWidth()){
+							colision = x-xx+10; 	
+						}
+					}
+				}else{
+					if(yy>start && yy<stop){
+						if(xx<=x && x<= xx + blo.getSize().getWidth()){
+							colision = x-xx+10; 	
+						}
 					}
 				}
+
 			}
 		}else{ // idziemy w prawo
 			Block blo;
@@ -255,16 +292,21 @@ public class Arrow extends Polyline{
 				blo = (Block)b;
 				yy=blo.getPosition().getY();
 				xx=blo.getPosition().getX();
-				System.out.println("jestesmy w iteratorze 1");
-				if(yy>start && yy<stop){
-					System.out.println("jestesmy w iteratorze 2");
-					if(xx<=x && x<= xx + blo.getSize().getWidth()){
-						colision = xx + blo.getSize().getWidth()-x+10; 	
+				if(this.enderhigher){
+						if(yy>=start && yy<=stop){
+							if(xx<=x && x<= xx + blo.getSize().getWidth()){
+								colision = xx + blo.getSize().getWidth()-x+10; 	
+							}
+						}
+				}else{
+					if(yy>start && yy<stop){
+						if(xx<=x && x<= xx + blo.getSize().getWidth()){
+							colision = xx + blo.getSize().getWidth()-x+10; 	
+						}
 					}
 				}
 			}
 		}
-		System.out.println("Sprawdza w kolizji "+colision);
 		return colision;
 
 	}

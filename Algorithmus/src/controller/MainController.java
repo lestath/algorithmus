@@ -248,6 +248,5 @@ public class MainController {
 		 this.delete.relocate(this.delete.getX()+20,pan.getPrefHeight()-this.delete.getHeight()*2);
 		 
 	}
-  	
-
+	
 }

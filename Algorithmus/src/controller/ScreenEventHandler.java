@@ -44,7 +44,6 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 						GraphicsBlockInterface gbi = (GraphicsBlockInterface) event.getSource(); 
 						gbi.delete(); // usuwanie bloku
 					}
-					System.out.println("Tryb usunięcia bloku");
 					return;
 				}
 				if(event.getSource() instanceof InHandler){
@@ -73,7 +72,6 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	private void deleteArrow(MouseEvent event) {
 		Arrow ar = (Arrow) event.getSource();
 		ar.getOwner().removeConnection();
-		System.out.println("usunięto strzalkę");
 	}
 
 	/**
@@ -108,6 +106,8 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	 */
 	private void moveBlock(MouseEvent event){
 		if(ViewParams.MODE.equals(Mode.Delete)){return;}
+		double panelwidth = this.cont.getBlockPane().getWidth();//szerokosc panelu bloczow
+		double panelheight = this.cont.getBlockPane().getHeight();
 		double x = this.block.getPosition().getX();
 		double y = this.block.getPosition().getY();
 		Bounds b = cont.BlockPane.localToScene(cont.BlockPane.getBoundsInLocal());
@@ -115,6 +115,12 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 		y = event.getSceneY()-b.getMinY();
 		x = x - this.block.getSize().getWidth()/2;
 		y = y - this.block.getSize().getHeight()/2;
+		if(x+block.getSize().getWidth()>panelwidth){
+			this.cont.getBlockPane().setPrefWidth(panelwidth + 300);
+		}
+		if(y+block.getSize().getHeight()>panelheight){
+			this.cont.getBlockPane().setPrefHeight(panelheight + 300);
+		}
 		this.block.getPosition().setLocation(x,y);
 		gpb.refresh();
 	}
@@ -128,7 +134,6 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 	private void inputHandlerService(MouseEvent event){
 		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		//TODO obsługa zaczepu wejściowego
-		System.out.println("Wcisnieto zaczep wejscia");
 		if(ViewParams.ACTUAL_ARROW!= null){
 			Handler src  = (Handler) event.getSource();
 			if(src.getArrow()==null){
@@ -160,7 +165,6 @@ public class ScreenEventHandler implements EventHandler<MouseEvent>{
 		if(ViewParams.MODE.equals(Mode.Delete)){return;}
 		//TODO obsługa zaczepu wyjściowego
 		if(ViewParams.ACTUAL_ARROW== null){
-			System.out.println("Wcisnieto zaczep wyjscia");
 			Handler src  = (Handler)event.getSource();
 			if(src.getArrow()==null){ // sprawdzenie cze nie ma już podpięcia
 				ViewParams.ACTUAL_HANDLER = src;
