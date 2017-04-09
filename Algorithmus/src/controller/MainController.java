@@ -241,7 +241,6 @@ public class MainController {
 		 this.MenuPane.setPrefHeight(pan.getPrefHeight());
 		 this.scrollpane.setPrefHeight(pan.getPrefHeight()-20);
 		 this.scrollpane.setPrefWidth(pan.getPrefWidth()-this.MenuPane.getPrefWidth()-this.generatebtn.getPrefWidth()-30);
-		 System.out.println("wymiar " + pan.getPrefHeight());
 		 double btnx = this.scrollpane.getPrefWidth()+this.MenuPane.getPrefWidth()+20;
 		 this.generatebtn.setLayoutX(btnx);
 		 this.generatebtn1.setLayoutX(btnx);

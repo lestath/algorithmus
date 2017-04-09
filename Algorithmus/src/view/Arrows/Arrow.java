@@ -35,7 +35,7 @@ public class Arrow extends Polyline{
 	    this.node.getChildren().add(this);
 	    this.enderhigher = false;
 	    this.move(stop.getX(),stop.getY());
-	    this.setStrokeWidth(2);
+	    this.setStrokeWidth(3);
 	}
 	
 	/**
@@ -143,24 +143,32 @@ public class Arrow extends Polyline{
 		this.setInnerLine();
 		//ustalenie wejścia
 		this.establishIn();
-		this.getPoints().add(this.stop.getX());
-		this.getPoints().add(this.stop.getY());
+		if(this.ender!=null){
+			this.getPoints().add(this.stop.getX());
+			this.getPoints().add(this.stop.getY());
+		}
 	}
-
+	
+	/**
+	 * Ustalenie początkowej lini wejścia
+	 */
 	private void establishIn() {
 		if(this.ender!=null){
 			if(this.ender instanceof LeftInHandler){
-				this.getPoints().add(this.stop.getX()-10);
-				this.getPoints().add(this.stop.getY());
+				this.getPoints().add(this.stop.getX()-10); //12
 			}else if(this.ender instanceof RightInHandler){
-				this.getPoints().add(this.stop.getX()+10);
-				this.getPoints().add(this.stop.getY());
+				this.getPoints().add(this.stop.getX()+10); //12
 			}else{
-				this.getPoints().add(this.stop.getX());
-				this.getPoints().add(this.stop.getY()-10);
+				this.getPoints().add(this.stop.getX()); //12
+			}
+			if(this.ender instanceof LeftInHandler || this.ender instanceof RightInHandler){
+				this.getPoints().add(this.stop.getY()); //13
+			}else{
+				this.getPoints().add(this.stop.getY()-10); //13
 			}
 		}
 	}
+	
 
 	/**
 	 * Ustalenie początkowej lini wyjścia
@@ -168,20 +176,20 @@ public class Arrow extends Polyline{
 	private void establishOut() {
 		if(this.owner!=null){
 			if(this.owner instanceof LeftOutHandler){
-				this.getPoints().add(this.start.getX()-10);
-				this.getPoints().add(this.start.getY());
-				this.getPoints().add(this.getPoints().get(2));
-				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+15);
+				this.getPoints().add(this.start.getX()-10); //2
+				this.getPoints().add(this.start.getY()); //3
+				this.getPoints().add(this.getPoints().get(2)); //4
+				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+15); //5
 			}else if(this.owner instanceof RightOutHandler){
 				this.getPoints().add(this.start.getX()+10); //2
 				this.getPoints().add(this.start.getY());    //3
-				this.getPoints().add(this.getPoints().get(2));
-				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+10);
+				this.getPoints().add(this.getPoints().get(2)); //4
+				this.getPoints().add(this.getPoints().get(3)+ this.owner.getBlock().getSize().getHeight()/2+10); //5
 			}else{
-				this.getPoints().add(this.start.getX());
-				this.getPoints().add(this.start.getY()+10);
-				this.getPoints().add(this.start.getX());
-				this.getPoints().add(this.start.getY()+16);
+				this.getPoints().add(this.start.getX()); //2
+				this.getPoints().add(this.start.getY()+10);//3
+				this.getPoints().add(this.start.getX());//4
+				this.getPoints().add(this.start.getY()+16);//5
 			}
 		}
 	}
@@ -190,8 +198,8 @@ public class Arrow extends Polyline{
 	 * Ustalenie przebiegu lini pośredniej w zalezności od ustawienia bloczków względem siebie
 	 */
 	private void setInnerLine() {
-		this.getPoints().add(this.stop.getX());
-		this.getPoints().add(this.getPoints().get(5));
+		this.getPoints().add(this.stop.getX()); //6
+		this.getPoints().add(this.getPoints().get(5));//7
 		if(this.start.getX()>=this.stop.getX()){ // sprawdzenie pojscia w lewo
 			if(this.start.getY()<=this.stop.getY()){ // sprawdzenie czy bloczek wyjscia na gorze
 				this.innerPointsSet(this.owner,this.ender,WhereToGo.LEFT);
@@ -221,7 +229,6 @@ public class Arrow extends Polyline{
 	 * 				określenie czy wyższy bliczek znajduje się na lewo czy prawo od niższego
 	 */
 	private void innerPointsSet(Handler start,Handler stop, WhereToGo where){
-		System.out.println("Weszło do kolizji");
 		switch(where){
 			case LEFT:
 				this.getPoints().add(this.stop.getX()-this.getColisionMove(
@@ -229,7 +236,7 @@ public class Arrow extends Polyline{
 						stop.getBlock().getPosition().getY(),
 						this.stop.getX(),
 						where
-				  ));
+				  )); //8
 			break;
 			case RIGHT:
 				this.getPoints().add(this.stop.getX()+this.getColisionMove(
@@ -237,14 +244,23 @@ public class Arrow extends Polyline{
 						stop.getBlock().getPosition().getY(),
 						this.stop.getX(),
 						where
-				  ));
+				  ));//8
 			break;
 		
 		}
 
-		this.getPoints().add(this.getPoints().get(7));
-		this.getPoints().add(this.getPoints().get(8));
-		this.getPoints().add(this.stop.getY()-10);
+		this.getPoints().add(this.getPoints().get(7)); //9
+		if(this.ender instanceof RightInHandler){
+			this.getPoints().add(this.getPoints().get(8)+10); //10
+			this.getPoints().add(this.stop.getY()); //11
+		}else if(this.ender instanceof LeftInHandler){
+			this.getPoints().add(this.getPoints().get(8)-10); //10
+			this.getPoints().add(this.stop.getY()); //11
+		}else{
+			this.getPoints().add(this.getPoints().get(8)); //10
+			this.getPoints().add(this.stop.getY()-10);//11
+		}
+
 	}
 	
 	/**
@@ -265,6 +281,9 @@ public class Arrow extends Polyline{
 		double yy;
 		double xx;
 		double colision = 0.00;
+		if(this.ender instanceof LeftInHandler || this.ender instanceof RightInHandler){
+			return 0.00;
+		}
 		if(w.equals(WhereToGo.LEFT)){ // idziemy w lewo
 			Block blo;
 			for(BlockInterface b: BlocksHolder.blocklist){ // iteracja po bloczkach
@@ -295,7 +314,7 @@ public class Arrow extends Polyline{
 				if(this.enderhigher){
 						if(yy>=start && yy<=stop){
 							if(xx<=x && x<= xx + blo.getSize().getWidth()){
-								colision = xx + blo.getSize().getWidth()-x+10; 	
+							 colision = xx + blo.getSize().getWidth()-x+10; 	
 							}
 						}
 				}else{
