@@ -18,6 +18,16 @@ public class StartBlock extends Block implements BlockInterface{
 	}
 	
 	public String getCode(){
-		return "int main(int args, char* argv[]) {";
+		String returnString = "";
+
+		returnString += "#include <stdio.h>";
+		returnString += System.getProperty("line.separator");
+		returnString += "#include <stdlib.h>";
+		returnString += System.getProperty("line.separator");
+		returnString += "using namespace std;";
+		returnString += System.getProperty("line.separator");
+		returnString += System.getProperty("line.separator");
+		returnString += "int main(int args, char* argv[]) {";
+		return returnString;
 	}
 }

@@ -17,6 +17,11 @@ public class StopBlock extends Block implements BlockInterface{
 	}
 	
 	public String getCode(){
-		return "}";
+		String returnString = "";
+		returnString += System.getProperty("line.separator");
+		returnString += "return 0;";
+		returnString += System.getProperty("line.separator");
+		returnString += "}";
+		return returnString;
 	}
 }

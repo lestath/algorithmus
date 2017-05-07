@@ -22,8 +22,7 @@ public class DecisionBlock extends Block implements BlockInterface {
 	}
 	
 	public String getCode(){
-		return null;
-		
+		return "if (" + getContent() + ") {";
 	}
 	public Block getNoblock() {
 		return noblock;

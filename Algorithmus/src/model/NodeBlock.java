@@ -31,6 +31,8 @@ public class NodeBlock extends Block implements BlockInterface{
 		this.raightinblock = reightinblock;
 	}
 	
-	
+	public String getCode() {
+		return "}";
+	}
 
 }

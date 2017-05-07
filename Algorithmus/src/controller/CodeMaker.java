@@ -15,6 +15,7 @@ import model.interfaces.BlockInterface;
  *
  */
 public class CodeMaker {
+	public static SourceManager sourceManager = SourceManager.getInstance();
 	
 	public static void generateCode(){
 		//TODO to tylko kod testowy
@@ -22,24 +23,18 @@ public class CodeMaker {
 		for(BlockInterface block : BlocksHolder.blocklist){
 			
 			b = (Block) block;
-			/*
-			if (b.getContent().equals("START")) {
-				System.out.println("int main() {");
-			}
 
-			if (b.getContent().equals("STOP")) {
-				System.out.println("int main() {");
-			}
-			*/
-			System.out.println(b.getContent());
+			System.out.println(b.getCode());
+			sourceManager.addln(b.getCode());
 		}
+		sourceManager.save();
 	}
 	
 	//TODO algorytm generowania kodu kodu
 	// w tej metodzie można przeprowadzać testy algorytmów generowania kodu 
 	public static void test(){
 		generateCode();
-	/*	ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
+		/*ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
 		Block b;
 		DecisionBlock db;
 		boolean start = checkSingleStartBlock();
@@ -50,22 +45,21 @@ public class CodeMaker {
 		for(BlockInterface bl : lst){
 			b = (Block) bl;
 			if(b instanceof StartBlock){
-				while(b != null){
+				while(b != null) {
+					System.out.println(b.getCode());
 					if(b instanceof DecisionBlock){
 						db = (DecisionBlock) b;
-						System.out.println("LEWY ->> " + db.getNoblock().getContent());
+						System.out.println(db.getNoblock().getCode());
+						sourceManager.addln(db.getNoblock().getCode());
+						System.out.println("} else {");
+						sourceManager.addln("} else {");
 					}
-					System.out.println(b.getCode());
 					b = b.getNext();
 				}
 				break;
 			}
-		
-		}*/
-		
-
-
-		
+		}
+		sourceManager.save();*/
 	}
 	
 	// metoda zwróci true jeżeli istnieje już blok startowy

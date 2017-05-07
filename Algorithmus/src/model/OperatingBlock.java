@@ -23,6 +23,14 @@ public class OperatingBlock extends Block implements BlockInterface{
 	}
 	
 	public String getCode(){
-		return null;
+		String returnString = "";
+		String[] lines = getContent().split(System.getProperty("line.separator"));
+		for (String line : lines) {
+			returnString += line;
+			returnString += ";";
+			returnString += System.getProperty("line.separator");
+		}
+
+		return returnString;
 	}
 }

@@ -22,5 +22,5 @@ public class Conf {
 	public static Paint IN_HANDLER_COLOR = Paint.valueOf("black");
 	public static Paint OUT_HANDLER_COLOR = Paint.valueOf("red");
 	public static Dimension STANDARD_BLOCK_DIM = new Dimension(180,60);
-	public static String [] STANDARD_TEXT = new String[]{"START", "Condition", "Code here...", "type name := value", "STOP"};
+	public static String [] STANDARD_TEXT = new String[]{"START", "Condition", "type name = value", "Output here...", "STOP"};
 }
