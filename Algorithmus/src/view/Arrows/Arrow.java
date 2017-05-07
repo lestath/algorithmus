@@ -303,7 +303,6 @@ public class Arrow extends Polyline{
 						}
 					}
 				}
-
 			}
 		}else{ // idziemy w prawo
 			Block blo;

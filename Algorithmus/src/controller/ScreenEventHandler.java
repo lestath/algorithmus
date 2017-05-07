@@ -19,7 +19,6 @@ import view.handlers.OutHandler;
  *
  */
 public class ScreenEventHandler implements EventHandler<MouseEvent>{
-
 	Block block;
 	GraphicsBlockInterface gpb;
 	MainController cont;

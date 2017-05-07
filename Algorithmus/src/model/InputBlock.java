@@ -27,7 +27,7 @@ public class InputBlock extends Block implements BlockInterface{
 		for (String line : lines) {
 			String word[] = line.split(" ", 3);
 			for (String w : word) {
-				System.err.println("w: " + w);
+				//System.err.println("w: " + w);
 			}
 			switch (word[0]) {
 				case "int":
