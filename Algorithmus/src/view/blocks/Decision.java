@@ -44,7 +44,7 @@ public class Decision extends Polygon implements GraphicsBlockInterface{
 		this.setFill(Conf.BLOCK_COLOR);
 		this.blockfield = new TextField();
 		this.refresh();
-		this.notext = new Text("N");
+		this.notext = new Text("T");
 		this.notext.setBoundsType(TextBoundsType.VISUAL);
 
 	}

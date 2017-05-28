@@ -33,8 +33,8 @@ public class CodeMaker {
 	//TODO algorytm generowania kodu kodu
 	// w tej metodzie można przeprowadzać testy algorytmów generowania kodu 
 	public static void test(){
-		generateCode();
-		/*ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
+		//generateCode();
+		ArrayList<BlockInterface> lst = BlocksHolder.blocklist;
 		Block b;
 		DecisionBlock db;
 		boolean start = checkSingleStartBlock();
@@ -42,11 +42,12 @@ public class CodeMaker {
 		if(!start){System.out.println("No Start Block !!!"); return;}
 		if(!stop){System.out.println("No Stop Block !!!"); return;}
 
-		for(BlockInterface bl : lst){
+		for(BlockInterface bl : lst) {
 			b = (Block) bl;
 			if(b instanceof StartBlock){
 				while(b != null) {
 					System.out.println(b.getCode());
+					sourceManager.addln(b.getCode());
 					if(b instanceof DecisionBlock){
 						db = (DecisionBlock) b;
 						System.out.println(db.getNoblock().getCode());
@@ -59,7 +60,7 @@ public class CodeMaker {
 				break;
 			}
 		}
-		sourceManager.save();*/
+		sourceManager.save();
 	}
 	
 	// metoda zwróci true jeżeli istnieje już blok startowy

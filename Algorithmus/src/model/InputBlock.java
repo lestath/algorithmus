@@ -26,10 +26,17 @@ public class InputBlock extends Block implements BlockInterface{
 		String returnString = "";
 		String[] lines = getContent().split(System.getProperty("line.separator"));
 		for (String line : lines) {
-			line = line.replaceAll(Pattern.quote("+"), " << ");
-			returnString += line;
+			if (line.startsWith("in:")) {
+				line = line.replaceAll(Pattern.quote("+"), " << ");
+				line = line.replaceAll(Pattern.quote("in:"), "");
+				returnString += "cin >> " + line + ";";
+			} else {
+				line = line.replaceAll(Pattern.quote("+"), " >> ");
+				line = line.replaceAll(Pattern.quote("out:"), "");
+				returnString += "cout << " + line + " << endl;";
+			}
 		}
-		return "cout << " + returnString + " << endl;";
+		return returnString;
 	}
     
 }
