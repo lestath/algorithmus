@@ -12,7 +12,7 @@ import javafx.scene.paint.Paint;
  *
  */
 public class Conf {
-	public enum BLOCK{START,DECISION,OPERATING,INPUT,STOP};
+	public enum BLOCK{START,DECISION,OPERATING,INPUT,STOP, FOR};
 	public static Dimension MENU_ELEMS_DIM = new Dimension(60,30);
 	public static Dimension DELETE_BTN_DIM = new Dimension(40,40);
 	public static Dimension NODE_DIM = new Dimension(30,30);
@@ -22,5 +22,5 @@ public class Conf {
 	public static Paint IN_HANDLER_COLOR = Paint.valueOf("black");
 	public static Paint OUT_HANDLER_COLOR = Paint.valueOf("red");
 	public static Dimension STANDARD_BLOCK_DIM = new Dimension(180,60);
-	public static String [] STANDARD_TEXT = new String[]{"START", "Condition", "type name = value", "Output here...", "STOP"};
+	public static String [] STANDARD_TEXT = new String[]{"START", "Condition", "type name = value", "Output here...", "STOP","int i=0;i<5;i++"};
 }

@@ -11,12 +11,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import model.Conf;
 import model.DecisionBlock;
+import model.ForBlock;
 import model.InputBlock;
 import model.NodeBlock;
 import model.OperatingBlock;
 import model.StartBlock;
 import model.StopBlock;
 import view.blocks.Decision;
+import view.blocks.For;
 import view.blocks.Input;
 import view.blocks.Node;
 import view.blocks.Operating;
@@ -74,6 +76,7 @@ public class MainController {
     private Stop stop;
     private Node node;
     private DeleteButton delete;
+	private For forr;
 
 
     @FXML
@@ -87,6 +90,7 @@ public class MainController {
         // inicjalizacja graficznych bloków operacyjnych
         this.startInitialize();
         this.operatingInitialize();
+        this.forInitialize();
         this.decisionInitialize();
         this.inputInitialize();
         this.outputInitialize();
@@ -206,6 +210,14 @@ public class MainController {
          //eventy
          this.delete.setOnMouseClicked(new MenuEventHandler(this,this.delete ));
 	}
+    
+    private void forInitialize(){
+    	  this.forr = new For(new ForBlock(new Point(10,this.startpos),Conf.MENU_ELEMS_DIM));
+          this.MenuPane.getChildren().add(this.forr);
+          startpos = startpos + move;
+          //eventy
+          this.forr.setOnMouseClicked(new MenuEventHandler(this,this.forr.getBlock()));
+    }
 
 
 

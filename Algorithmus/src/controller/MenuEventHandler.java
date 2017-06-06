@@ -3,16 +3,21 @@ package controller;
 import java.awt.Point;
 
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import model.BlocksHolder;
 import model.Conf;
 import model.DecisionBlock;
+import model.ForBlock;
 import model.InputBlock;
 import model.NodeBlock;
 import model.OperatingBlock;
 import model.StartBlock;
 import model.StopBlock;
 import view.blocks.Decision;
+import view.blocks.For;
 import view.blocks.Input;
 import view.blocks.Node;
 import view.blocks.Operating;
@@ -31,13 +36,17 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 
 
 	private MainController controller;
+	Image img;
 
 	private Object generator;
 	
 	public MenuEventHandler(MainController cont, Object gen){
 		this.generator = gen;
 		controller = cont;
+		this.img = new Image(this.getClass().getResource("/resources/eraser.png").toString());
 	}
+	
+	
 	
 	/**
 	 * metoda obsługi zdarzeń myszy
@@ -56,11 +65,33 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 			this.stopHandle();
 		}else if(this.generator instanceof NodeBlock){
 			this.nodeHandle();
+		}else if(this.generator instanceof ForBlock){
+			this.forHandle();
 		}else if(this.generator instanceof DeleteButton){
 			this.deleteHandle();
 		}
 	}
 	
+
+
+	private void forHandle() {
+		 ForBlock myblock = new ForBlock((Point)Conf.NEW_ELEMENT_POS.clone(),(Dimension)Conf.STANDARD_BLOCK_DIM.clone());
+		 For op = new For(myblock);
+		 BlocksHolder.blocklist.add(myblock);
+		 
+		 // eventy
+		 op.setOnMouseDragged(new ScreenEventHandler(this.controller,myblock,op));
+		 op.setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getBlockfield().setOnKeyPressed(new KeyEventHandler(this.controller,myblock,op.getBlockfield()));
+		
+		 
+		 this.controller.getBlockPane().getChildren().add(op);
+		 op.prepair(this.controller.getBlockPane());
+		 op.getIn().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+	//	 op.getLeftOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+		 op.getRightOut().setOnMouseClicked(new ScreenEventHandler(this.controller,myblock,op));
+	}
+
 
 
 	private void nodeHandle() {
@@ -171,9 +202,11 @@ public class MenuEventHandler implements EventHandler<MouseEvent>{
 		if(ViewParams.MODE.equals(Mode.Delete)){
 			ViewParams.MODE = Mode.Normal;
 			this.controller.getDelete().setNormalLook();
+			ViewParams.stg.getScene().setCursor(Cursor.DEFAULT);
 		}else{
 			ViewParams.MODE = Mode.Delete;
 			this.controller.getDelete().setDeleteLook();
+			ViewParams.stg.getScene().setCursor(new ImageCursor(this.img));
 		}
 	}
 	
